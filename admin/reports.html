@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laporan - SINAR JAYA KONVEKSI</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/style.css?v=7">
+    <link rel="stylesheet" href="../css/admin.css?v=7">
+    <script src="../js/admin/auth.js"></script>
+    <style>
+        /* CSS BARU YANG PASTI JALAN (KARENA CLASS BARU) */
+        .tab-btn {
+            background-color: #ffffff !important;
+            color: #334155 !important;
+            border: 1px solid #cbd5e1 !important;
+            padding: 12px 24px !important;
+            font-weight: 600 !important;
+            font-size: 0.95rem !important;
+            border-radius: 50px !important;
+            /* Rounded pill shape like screenshot */
+            cursor: pointer !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            gap: 10px !important;
+            transition: all 0.2s !important;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05) !important;
+        }
+
+        .tab-btn:hover {
+            background-color: #f8fafc !important;
+            border-color: #94a3b8 !important;
+            color: #0f172a !important;
+        }
+
+        /* STATE AKTIF - PUTIH BERSIH DENGAN BORDER BIRU */
+        .tab-btn.active {
+            background: #ffffff !important;
+            /* Putih Mutlak */
+            background-image: none !important;
+            /* Hapus gradasi apapun */
+            color: #2563eb !important;
+            /* Teks Biru Terang */
+            border: 2px solid #2563eb !important;
+            /* Border Biru Jelas */
+            box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1) !important;
+            /* Glow halus luar */
+        }
+
+        .tab-btn i {
+            font-size: 1.1em !important;
+            color: #64748b !important;
+        }
+
+        .tab-btn.active i {
+            color: #2563eb !important;
+        }
+
+        .tab-container {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+        }
+
+        /* FORCE CONTENT VISIBILITY */
+        .report-section .card {
+            background: #fff !important;
+        }
+
+        .report-section * {
+            color: #0f172a;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="admin-wrapper">
+        <!-- Sidebar -->
+        <aside class="admin-sidebar">
+            <div class="sidebar-header">
+                <div class="logo-text">SINAR JAYA<span>KONVEKSI</span></div>
+                <button class="sidebar-toggle"><i class="fas fa-times"></i></button>
+            </div>
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <span class="nav-section-title">Menu Utama</span>
+                    <a href="index.html" class="nav-item"><i class="fas fa-home"></i><span>Dashboard</span></a>
+                    <a href="products.html" class="nav-item"><i class="fas fa-box"></i><span>Manajemen Produk</span></a>
+                    <a href="gallery.html" class="nav-item"><i class="fas fa-images"></i><span>Galeri Foto</span></a>
+                    <a href="prediction.html" class="nav-item"><i class="fas fa-chart-line"></i><span>Prediksi
+                            Stok</span></a>
+                    <a href="reports.html" class="nav-item active"><i
+                            class="fas fa-file-alt"></i><span>Laporan</span></a>
+                    <a href="messages.html" class="nav-item"><i class="fas fa-envelope"></i><span>Pesan Masuk</span></a>
+                    <a href="testimonials.html" class="nav-item"><i class="fas fa-star"></i><span>Testimonial</span></a>
+                </div>
+                <div class="nav-section">
+                    <span class="nav-section-title">Pengaturan</span>
+                    <a href="settings.html" class="nav-item"><i class="fas fa-cog"></i><span>Pengaturan</span></a>
+                    <a href="#" onclick="logout(); return false;" class="nav-item" style="color: var(--danger);"><i
+                            class="fas fa-sign-out-alt"></i><span>Keluar</span></a>
+                </div>
+            </nav>
+            <div class="sidebar-footer">
+                <div class="user-info">
+                    <div class="user-avatar">AD</div>
+                    <div class="user-details"><strong>Admin</strong><span>Administrator</span></div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="admin-main">
+            <header class="admin-header">
+                <div class="header-left">
+                    <button class="mobile-toggle"><i class="fas fa-bars"></i></button>
+                    <div class="page-title">
+                        <h4>Laporan</h4>
+                        <span>Laporan penjualan dan stok barang</span>
+                    </div>
+                </div>
+                <div class="header-right">
+                    <div class="notification-wrapper">
+                        <button class="header-icon notification-trigger" id="notification-btn">
+                            <i class="fas fa-bell"></i>
+                            <span class="badge" id="notification-badge"></span>
+                        </button>
+                        <div class="notification-dropdown" id="notification-dropdown">
+                            <div class="notification-header">
+                                <h6><i class="fas fa-bell"></i> Notifikasi</h6>
+                                <button class="mark-all-read" onclick="markAllRead()">Tandai dibaca</button>
+                            </div>
+                            <div class="notification-list" id="notification-list">
+                                <div class="notification-loading">
+                                    <i class="fas fa-spinner fa-spin"></i> Memuat...
+                                </div>
+                            </div>
+                            <div class="notification-footer">
+                                <a href="messages.html">Lihat Semua Pesan <i class="fas fa-arrow-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="../index.html" class="btn btn-sm btn-secondary"><i class="fas fa-external-link-alt"></i>
+                        Lihat Website</a>
+                </div>
+            </header>
+
+            <div class="admin-content" id="reports-container">
+                <!-- Report Type Tabs -->
+                <div class="tab-container">
+                    <button class="tab-btn active" onclick="showReport('sales')">
+                        <i class="fas fa-shopping-cart"></i> Laporan Penjualan
+                    </button>
+                    <button class="tab-btn" onclick="showReport('stock')">
+                        <i class="fas fa-warehouse"></i> Laporan Stok
+                    </button>
+                    <button class="tab-btn" onclick="showReport('prediction')">
+                        <i class="fas fa-chart-line"></i> Laporan Prediksi
+                    </button>
+                </div>
+
+                <!-- Filters -->
+                <div class="card" style="margin-bottom: 1.5rem;">
+                    <div class="card-body">
+                        <div style="display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;">
+                            <div>
+                                <label class="form-label" style="margin-bottom: 0.5rem;">Tahun</label>
+                                <select id="report-year" class="form-input" style="width: auto;">
+                                    <option value="2025">2025</option>
+                                    <option value="2024">2024</option>
+                                </select>
+                            </div>
+                            <div style="margin-left: auto; display: flex; gap: 0.5rem;">
+                                <button class="btn btn-secondary" onclick="exportReportExcel('current')">
+                                    <i class="fas fa-file-excel"></i> Export Excel
+                                </button>
+                                <button class="btn btn-primary" onclick="exportReportPDF('current')">
+                                    <i class="fas fa-file-pdf"></i> Export PDF
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sales Report -->
+                <div id="sales-report-section" class="report-section">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5><i class="fas fa-chart-bar" style="margin-right: 0.5rem; color: var(--primary);"></i>
+                                Laporan Penjualan</h5>
+                        </div>
+                        <div class="card-body" id="sales-report">
+                            <!-- Loaded by JS -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Stock Report -->
+                <div id="stock-report-section" class="report-section" style="display: none;">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5><i class="fas fa-boxes" style="margin-right: 0.5rem; color: var(--success);"></i>
+                                Laporan Stok Barang</h5>
+                        </div>
+                        <div class="card-body" id="stock-report">
+                            <!-- Loaded by JS -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Prediction Report -->
+                <div id="prediction-report-section" class="report-section" style="display: none;">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5><i class="fas fa-chart-line" style="margin-right: 0.5rem; color: var(--warning);"></i>
+                                Laporan Prediksi Tahunan</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="alert info" style="margin-bottom: 1.5rem;">
+                                <i class="fas fa-info-circle"></i>
+                                <div>
+                                    <strong>Ringkasan Prediksi</strong>
+                                    <p style="margin: 0;">Berdasarkan analisis data historis, berikut adalah prediksi
+                                        kebutuhan stok untuk tahun mendatang.</p>
+                                </div>
+                            </div>
+
+                            <div
+                                style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-bottom: 2rem;">
+                                <div
+                                    style="background: var(--gray-50); padding: 1.5rem; border-radius: var(--radius-lg); text-align: center;">
+                                    <i class="fas fa-shirt"
+                                        style="font-size: 2rem; color: var(--primary); margin-bottom: 0.5rem;"></i>
+                                    <h6>Kemeja</h6>
+                                    <strong style="font-size: 1.5rem; color: var(--primary);">2,400</strong>
+                                    <span style="display: block; font-size: 0.75rem; color: var(--success);">+15% dari
+                                        tahun lalu</span>
+                                </div>
+                                <div
+                                    style="background: var(--gray-50); padding: 1.5rem; border-radius: var(--radius-lg); text-align: center;">
+                                    <i class="fas fa-tshirt"
+                                        style="font-size: 2rem; color: var(--success); margin-bottom: 0.5rem;"></i>
+                                    <h6>Polo Shirt</h6>
+                                    <strong style="font-size: 1.5rem; color: var(--success);">3,200</strong>
+                                    <span style="display: block; font-size: 0.75rem; color: var(--success);">+12% dari
+                                        tahun lalu</span>
+                                </div>
+                                <div
+                                    style="background: var(--gray-50); padding: 1.5rem; border-radius: var(--radius-lg); text-align: center;">
+                                    <i class="fas fa-vest"
+                                        style="font-size: 2rem; color: var(--warning); margin-bottom: 0.5rem;"></i>
+                                    <h6>Jaket</h6>
+                                    <strong style="font-size: 1.5rem; color: var(--warning);">1,200</strong>
+                                    <span style="display: block; font-size: 0.75rem; color: var(--success);">+8% dari
+                                        tahun lalu</span>
+                                </div>
+                                <div
+                                    style="background: var(--gray-50); padding: 1.5rem; border-radius: var(--radius-lg); text-align: center;">
+                                    <i class="fas fa-user-tie"
+                                        style="font-size: 2rem; color: var(--accent); margin-bottom: 0.5rem;"></i>
+                                    <h6>Seragam</h6>
+                                    <strong style="font-size: 1.5rem; color: var(--accent);">1,800</strong>
+                                    <span style="display: block; font-size: 0.75rem; color: var(--success);">+18% dari
+                                        tahun lalu</span>
+                                </div>
+                            </div>
+
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Kategori</th>
+                                        <th>Prediksi Q1</th>
+                                        <th>Prediksi Q2</th>
+                                        <th>Prediksi Q3</th>
+                                        <th>Prediksi Q4</th>
+                                        <th>Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Kemeja</strong></td>
+                                        <td>550</td>
+                                        <td>600</td>
+                                        <td>580</td>
+                                        <td>670</td>
+                                        <td><strong>2,400</strong></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Polo Shirt</strong></td>
+                                        <td>750</td>
+                                        <td>800</td>
+                                        <td>780</td>
+                                        <td>870</td>
+                                        <td><strong>3,200</strong></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Jaket</strong></td>
+                                        <td>250</td>
+                                        <td>280</td>
+                                        <td>320</td>
+                                        <td>350</td>
+                                        <td><strong>1,200</strong></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Seragam</strong></td>
+                                        <td>400</td>
+                                        <td>450</td>
+                                        <td>420</td>
+                                        <td>530</td>
+                                        <td><strong>1,800</strong></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="../js/data.js?v=3"></script>
+    <script src="../js/main.js?v=3"></script>
+    <script src="../js/admin/reports.js?v=3"></script>
+    <script src="../js/admin/notifications.js"></script>
+    <script>
+        // Mobile toggle
+        document.querySelector('.mobile-toggle')?.addEventListener('click', () => {
+            document.querySelector('.admin-sidebar')?.classList.toggle('open');
+        });
+        document.querySelector('.sidebar-toggle')?.addEventListener('click', () => {
+            document.querySelector('.admin-sidebar')?.classList.remove('open');
+        });
+
+        function showReport(type) {
+            // Update tabs - GUNAKAN CLASS BARU 'tab-btn'
+            document.querySelectorAll('.tab-btn').forEach(tab => tab.classList.remove('active'));
+
+            // Handle click on icon or text inside button
+            const btn = event.target.closest('.tab-btn');
+            if (btn) btn.classList.add('active');
+
+            // Show/hide sections
+            document.querySelectorAll('.report-section').forEach(section => {
+                section.style.display = 'none';
+            });
+            document.getElementById(`${type}-report-section`).style.display = 'block';
+        }
+
+        // Override export functions to ensure they work
+        window.getCurrentReportType = function () {
+            const activeTab = document.querySelector('.algorithm-tab.active');
+            if (activeTab?.textContent.includes('Penjualan')) return 'sales';
+            if (activeTab?.textContent.includes('Stok')) return 'stock';
+            return 'prediction';
+        };
+
+        window.exportReportExcel = function (type) {
+            console.log('exportReportExcel called with type:', type);
+            const reportType = type === 'current' ? getCurrentReportType() : type;
+
+            try {
+                showToast('Menyiapkan file Excel...', 'info');
+
+                let csvContent = '\uFEFF'; // BOM for UTF-8
+                const year = document.getElementById('report-year')?.value || '2025';
+                const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+                if (reportType === 'sales') {
+                    csvContent += '"LAPORAN PENJUALAN - SINAR JAYA KONVEKSI"\n';
+                    csvContent += '"Tahun: ' + year + '"\n';
+                    csvContent += '"Tanggal Export: ' + new Date().toLocaleDateString('id-ID') + '"\n\n';
+                    csvContent += '"Bulan","Penjualan"\n';
+
+                    const salesData = (typeof Storage !== 'undefined' && Storage.get) ?
+                        (Storage.get('salesData') || SinarJayaData.salesData) : SinarJayaData.salesData;
+                    const data = salesData[year] || salesData['2024'] || [];
+
+                    data.forEach((sales, i) => {
+                        csvContent += '"' + months[i] + '","' + sales + '"\n';
+                    });
+
+                    const total = data.reduce((a, b) => a + b, 0);
+                    csvContent += '\n"TOTAL","' + total + '"\n';
+                    csvContent += '"Rata-rata","' + Math.round(total / data.length) + '"\n';
+
+                } else if (reportType === 'stock') {
+                    csvContent += '"LAPORAN STOK BARANG - SINAR JAYA KONVEKSI"\n';
+                    csvContent += '"Tanggal Export: ' + new Date().toLocaleDateString('id-ID') + '"\n\n';
+                    csvContent += '"Kategori","Jumlah Produk","Total Stok","Nilai Inventori"\n';
+
+                    const products = (typeof Storage !== 'undefined' && Storage.get) ?
+                        (Storage.get('products') || SinarJayaData.products) : SinarJayaData.products;
+
+                    SinarJayaData.categories.forEach(cat => {
+                        const catProducts = products.filter(p => p.category === cat.id);
+                        const totalStock = catProducts.reduce((sum, p) => sum + (p.stock || 0), 0);
+                        const totalValue = catProducts.reduce((sum, p) => sum + ((p.stock || 0) * (p.price || 0)), 0);
+                        csvContent += '"' + cat.name + '","' + catProducts.length + '","' + totalStock + '","Rp ' + totalValue.toLocaleString('id-ID') + '"\n';
+                    });
+
+                } else {
+                    csvContent += '"LAPORAN PREDIKSI STOK - SINAR JAYA KONVEKSI"\n';
+                    csvContent += '"Tanggal Export: ' + new Date().toLocaleDateString('id-ID') + '"\n\n';
+                    csvContent += '"Kategori","Q1","Q2","Q3","Q4","Total"\n';
+                    csvContent += '"Kemeja","550","600","580","670","2400"\n';
+                    csvContent += '"Polo Shirt","750","800","780","870","3200"\n';
+                    csvContent += '"Jaket","250","280","320","350","1200"\n';
+                    csvContent += '"Seragam","400","450","420","530","1800"\n';
+                }
+
+                const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+                const link = document.createElement('a');
+                link.href = URL.createObjectURL(blob);
+                link.download = 'Laporan_' + reportType + '_' + new Date().toISOString().slice(0, 10) + '.csv';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+
+                showToast('File berhasil diunduh!', 'success');
+            } catch (e) {
+                console.error('Error exporting Excel:', e);
+                alert('Error: ' + e.message);
+            }
+        };
+
+        window.exportReportPDF = function (type) {
+            console.log('exportReportPDF called with type:', type);
+            const reportType = type === 'current' ? getCurrentReportType() : type;
+
+            try {
+                showToast('Menyiapkan halaman cetak...', 'info');
+
+                const printWindow = window.open('', '_blank');
+                if (!printWindow) {
+                    alert('Pop-up diblokir! Izinkan pop-up untuk mencetak PDF.\n\n1. Klik ikon blokir pop-up di address bar\n2. Pilih "Always allow pop-ups"\n3. Coba lagi');
+                    return;
+                }
+
+                const year = document.getElementById('report-year')?.value || '2025';
+                const months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+                let tableHTML = '';
+                let summaryHTML = '';
+                let title = '';
+
+                if (reportType === 'sales') {
+                    title = 'Laporan Penjualan Tahun ' + year;
+                    const salesData = (typeof Storage !== 'undefined' && Storage.get) ?
+                        (Storage.get('salesData') || SinarJayaData.salesData) : SinarJayaData.salesData;
+                    const data = salesData[year] || salesData['2024'] || [];
+                    const total = data.reduce((a, b) => a + b, 0);
+
+                    tableHTML = '<table><thead><tr><th>Bulan</th><th>Penjualan</th><th>Persentase</th></tr></thead><tbody>';
+                    data.forEach((sales, i) => {
+                        const pct = ((sales / total) * 100).toFixed(1);
+                        tableHTML += '<tr><td>' + months[i] + '</td><td>' + sales.toLocaleString('id-ID') + '</td><td>' + pct + '%</td></tr>';
+                    });
+                    tableHTML += '</tbody></table>';
+
+                    summaryHTML = '<p><strong>Total Penjualan:</strong> ' + total.toLocaleString('id-ID') + '</p>';
+                    summaryHTML += '<p><strong>Rata-rata/Bulan:</strong> ' + (data.length > 0 ? Math.round(total / data.length) : 0).toLocaleString('id-ID') + '</p>';
+
+                } else if (reportType === 'stock') {
+                    title = 'Laporan Stok Barang';
+                    const products = (typeof Storage !== 'undefined' && Storage.get) ?
+                        (Storage.get('products') || SinarJayaData.products) : SinarJayaData.products;
+
+                    tableHTML = '<table><thead><tr><th>Kategori</th><th>Jumlah Produk</th><th>Total Stok</th><th>Nilai Inventori</th></tr></thead><tbody>';
+                    let totalStock = 0, totalValue = 0;
+
+                    SinarJayaData.categories.forEach(cat => {
+                        const catProducts = products.filter(p => p.category === cat.id);
+                        const stock = catProducts.reduce((sum, p) => sum + (p.stock || 0), 0);
+                        const value = catProducts.reduce((sum, p) => sum + ((p.stock || 0) * (p.price || 0)), 0);
+                        totalStock += stock;
+                        totalValue += value;
+                        tableHTML += '<tr><td>' + cat.name + '</td><td>' + catProducts.length + '</td><td>' + stock.toLocaleString('id-ID') + '</td><td>Rp ' + value.toLocaleString('id-ID') + '</td></tr>';
+                    });
+                    tableHTML += '</tbody></table>';
+
+                    summaryHTML = '<p><strong>Total Stok:</strong> ' + totalStock.toLocaleString('id-ID') + ' pcs</p>';
+                    summaryHTML += '<p><strong>Nilai Inventori:</strong> Rp ' + totalValue.toLocaleString('id-ID') + '</p>';
+
+                } else {
+                    title = 'Laporan Prediksi Stok Tahunan';
+                    tableHTML = '<table><thead><tr><th>Kategori</th><th>Q1</th><th>Q2</th><th>Q3</th><th>Q4</th><th>Total</th></tr></thead><tbody>';
+                    tableHTML += '<tr><td>Kemeja</td><td>0</td><td>0</td><td>0</td><td>0</td><td><strong>0</strong></td></tr>';
+                    tableHTML += '<tr><td>Polo Shirt</td><td>0</td><td>0</td><td>0</td><td>0</td><td><strong>0</strong></td></tr>';
+                    tableHTML += '<tr><td>Jaket</td><td>0</td><td>0</td><td>0</td><td>0</td><td><strong>0</strong></td></tr>';
+                    tableHTML += '<tr><td>Seragam</td><td>0</td><td>0</td><td>0</td><td>0</td><td><strong>0</strong></td></tr>';
+                    tableHTML += '</tbody></table>';
+
+                    summaryHTML = '<p><strong>Total Prediksi:</strong> 0 pcs</p>';
+                    summaryHTML += '<p><strong>Pertumbuhan Rata-rata:</strong> 0%</p>';
+                }
+
+                const printContent = `
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <title>${title} - SINAR JAYA KONVEKSI</title>
+                    <style>
+                        * { margin: 0; padding: 0; box-sizing: border-box; }
+                        body { font-family: Arial, sans-serif; padding: 40px; color: #333; }
+                        .header { text-align: center; margin-bottom: 30px; padding-bottom: 20px; border-bottom: 2px solid #ff6b00; }
+                        .header h1 { color: #ff6b00; font-size: 24px; }
+                        .header h2 { color: #333; font-size: 18px; margin-top: 10px; }
+                        .header p { color: #666; font-size: 12px; margin-top: 5px; }
+                        table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+                        th, td { border: 1px solid #ddd; padding: 10px; text-align: left; }
+                        th { background: #f5f5f5; font-weight: 600; }
+                        tr:nth-child(even) { background: #fafafa; }
+                        .summary { background: #fff8f0; padding: 15px; border-radius: 8px; margin-top: 20px; }
+                        .summary h4 { color: #ff6b00; margin-bottom: 10px; }
+                        .print-btn { display: block; margin: 30px auto; padding: 12px 30px; background: #ff6b00; color: white; border: none; border-radius: 5px; font-size: 16px; cursor: pointer; }
+                        .print-btn:hover { background: #e55d00; }
+                        @media print { .print-btn { display: none; } }
+                    </style>
+                </head>
+                <body>
+                    <div class="header">
+                        <h1>SINAR JAYA KONVEKSI</h1>
+                        <h2>${title}</h2>
+                        <p>Tanggal: ${new Date().toLocaleDateString('id-ID', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</p>
+                    </div>
+                    
+                    ${tableHTML}
+                    
+                    <div class="summary">
+                        <h4>Ringkasan</h4>
+                        ${summaryHTML}
+                    </div>
+                    
+                    <button class="print-btn" onclick="window.print()">
+                        🖨️ Cetak / Save as PDF
+                    </button>
+                </body>
+                </html>
+                `;
+
+                printWindow.document.write(printContent);
+                printWindow.document.close();
+
+                showToast('Halaman cetak terbuka!', 'success');
+            } catch (e) {
+                console.error('Error exporting PDF:', e);
+                alert('Error: ' + e.message);
+            }
+        };
+
+        console.log('Report export functions ready:', typeof window.exportReportExcel, typeof window.exportReportPDF);
+    </script>
+</body>
+
+</html>

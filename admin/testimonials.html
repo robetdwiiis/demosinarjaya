@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manajemen Testimonial - Admin SINAR JAYA</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/admin.css">
+    <script src="../js/admin/auth.js"></script>
+</head>
+
+<body>
+    <div class="admin-wrapper">
+        <!-- Sidebar -->
+        <aside class="admin-sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="logo-text">SINAR JAYA<span>KONVEKSI</span></div>
+                <button class="sidebar-toggle"><i class="fas fa-times"></i></button>
+            </div>
+
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <span class="nav-section-title">Menu Utama</span>
+                    <a href="index.html" class="nav-item"><i class="fas fa-home"></i><span>Dashboard</span></a>
+                    <a href="products.html" class="nav-item"><i class="fas fa-box"></i><span>Manajemen Produk</span></a>
+                    <a href="gallery.html" class="nav-item"><i class="fas fa-images"></i><span>Galeri Foto</span></a>
+                    <a href="prediction.html" class="nav-item"><i class="fas fa-chart-line"></i><span>Prediksi
+                            Stok</span></a>
+                    <a href="reports.html" class="nav-item"><i class="fas fa-file-alt"></i><span>Laporan</span></a>
+                    <a href="messages.html" class="nav-item"><i class="fas fa-envelope"></i><span>Pesan Masuk</span></a>
+                    <a href="testimonials.html" class="nav-item active"><i
+                            class="fas fa-star"></i><span>Testimonial</span></a>
+                </div>
+
+                <div class="nav-section">
+                    <span class="nav-section-title">Pengaturan</span>
+                    <a href="settings.html" class="nav-item"><i class="fas fa-cog"></i><span>Pengaturan</span></a>
+                    <a href="#" onclick="logout(); return false;" class="nav-item" style="color: var(--danger);"><i
+                            class="fas fa-sign-out-alt"></i><span>Keluar</span></a>
+                </div>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="user-info">
+                    <div class="user-avatar">AD</div>
+                    <div class="user-details">
+                        <strong>Admin</strong>
+                        <span>Administrator</span>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="admin-main">
+            <header class="admin-header">
+                <div class="header-left">
+                    <button class="mobile-toggle"><i class="fas fa-bars"></i></button>
+                    <div class="page-title">
+                        <h4>Manajemen Testimonial</h4>
+                        <span>Kelola ulasan dan suara pelanggan Anda</span>
+                    </div>
+                </div>
+                <div class="header-right">
+                    <div class="notification-wrapper">
+                        <button class="header-icon notification-trigger" id="notification-btn">
+                            <i class="fas fa-bell"></i>
+                            <span class="badge" id="notification-badge"></span>
+                        </button>
+                        <div class="notification-dropdown" id="notification-dropdown">
+                            <div class="notification-header">
+                                <h6><i class="fas fa-bell"></i> Notifikasi</h6>
+                                <button class="mark-all-read" onclick="markAllRead()">Tandai dibaca</button>
+                            </div>
+                            <div class="notification-list" id="notification-list">
+                                <div class="notification-loading">
+                                    <i class="fas fa-spinner fa-spin"></i> Memuat...
+                                </div>
+                            </div>
+                            <div class="notification-footer">
+                                <a href="messages.html">Lihat Semua Pesan <i class="fas fa-arrow-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="../index.html" class="btn btn-sm btn-secondary"><i class="fas fa-external-link-alt"></i>
+                        Lihat Website</a>
+                </div>
+            </header>
+
+            <div class="admin-content">
+                <!-- Alerts / Summary -->
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 1.5rem;">
+                    <div class="stat-card">
+                        <div class="stat-card-icon primary"><i class="fas fa-star"></i></div>
+                        <div class="stat-card-info">
+                            <h3 id="total-testi">0</h3>
+                            <span>Total Ulasan</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-card-icon warning"><i class="fas fa-clock"></i></div>
+                        <div class="stat-card-info">
+                            <h3 id="pending-testi">0</h3>
+                            <span>Menunggu Moderasi</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-card-icon success"><i class="fas fa-check-circle"></i></div>
+                        <div class="stat-card-info">
+                            <h3 id="active-testi">0</h3>
+                            <span>Ulasan Aktif</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Daftar Testimonial</h5>
+                        <button class="btn btn-sm btn-secondary" onclick="loadTestimonialsAdmin()">
+                            <i class="fas fa-sync-alt"></i> Refresh
+                        </button>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="admin-table">
+                                <thead>
+                                    <tr>
+                                        <th>Pelanggan</th>
+                                        <th>Rating</th>
+                                        <th>Testimonial</th>
+                                        <th>Status</th>
+                                        <th>Tanggal</th>
+                                        <th>Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="testimonial-list">
+                                    <tr>
+                                        <td colspan="6" class="text-center" style="padding: 3rem;">
+                                            <i class="fas fa-spinner fa-spin fa-2x"></i>
+                                            <p style="margin-top: 1rem;">Memuat data...</p>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="../js/data.js"></script>
+    <script src="../js/main.js"></script>
+    <script src="../js/admin/notifications.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            loadTestimonialsAdmin();
+
+            // Mobile toggle
+            document.querySelector('.mobile-toggle')?.addEventListener('click', () => {
+                document.querySelector('.admin-sidebar')?.classList.toggle('open');
+            });
+            document.querySelector('.sidebar-toggle')?.addEventListener('click', () => {
+                document.querySelector('.admin-sidebar')?.classList.remove('open');
+            });
+        });
+
+        async function loadTestimonialsAdmin() {
+            const list = document.getElementById('testimonial-list');
+            try {
+                const response = await fetch('../api/testimonials.php?action=admin_list');
+                const result = await response.json();
+
+                if (result.success) {
+                    // Update stats
+                    const stats = result.data.reduce((acc, curr) => {
+                        acc.total++;
+                        if (curr.status === 'pending') acc.pending++;
+                        if (curr.status === 'active') acc.active++;
+                        return acc;
+                    }, { total: 0, pending: 0, active: 0 });
+
+                    document.getElementById('total-testi').textContent = stats.total;
+                    document.getElementById('pending-testi').textContent = stats.pending;
+                    document.getElementById('active-testi').textContent = stats.active;
+
+                    if (result.data.length === 0) {
+                        list.innerHTML = '<tr><td colspan="6" class="text-center">Belum ada testimonial masuk</td></tr>';
+                        return;
+                    }
+
+                    list.innerHTML = result.data.map(testi => `
+                        <tr>
+                            <td>
+                                <div style="display: flex; align-items: center; gap: 10px;">
+                                    <img src="${testi.foto || 'https://i.pravatar.cc/100?u=' + testi.nama}" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover;">
+                                    <div>
+                                        <strong>${testi.nama}</strong><br>
+                                        <small class="text-muted">${testi.perusahaan || testi.jabatan || '-'}</small>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div style="color: #f59e0b; font-size: 0.75rem;">
+                                    ${Array(parseInt(testi.rating)).fill('<i class="fas fa-star"></i>').join('')}
+                                    ${Array(5 - parseInt(testi.rating)).fill('<i class="far fa-star"></i>').join('')}
+                                </div>
+                            </td>
+                            <td>
+                                <div style="max-width: 300px; max-height: 60px; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; font-size: 0.875rem;">
+                                    "${testi.testimoni}"
+                                </div>
+                            </td>
+                            <td>
+                                <span class="badge badge-${testi.status === 'active' ? 'success' : testi.status === 'pending' ? 'warning' : 'secondary'}">
+                                    ${testi.status === 'active' ? 'AKTIF' : testi.status === 'pending' ? 'PENDING' : 'NONAKTIF'}
+                                </span>
+                            </td>
+                            <td>${new Date(testi.created_at).toLocaleDateString('id-ID')}</td>
+                            <td>
+                                <div style="display: flex; gap: 5px;">
+                                    ${testi.status === 'pending' ? `
+                                        <button onclick="updateStatus(${testi.id}, 'active')" class="btn btn-sm btn-primary" title="Setujui">
+                                            <i class="fas fa-check"></i>
+                                        </button>
+                                    ` : ''}
+                                    ${testi.status === 'active' ? `
+                                        <button onclick="updateStatus(${testi.id}, 'inactive')" class="btn btn-sm btn-secondary" title="Sembunyikan">
+                                            <i class="fas fa-eye-slash"></i>
+                                        </button>
+                                    ` : `
+                                        <button onclick="updateStatus(${testi.id}, 'active')" class="btn btn-sm btn-success" title="Tampilkan">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                    `}
+                                    <button onclick="deleteTestimonial(${testi.id})" class="btn btn-sm btn-outline" style="color: var(--danger);" title="Hapus">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    `).join('');
+                }
+            } catch (error) {
+                console.error('Error loading testimonials:', error);
+                list.innerHTML = '<tr><td colspan="6" class="text-center text-danger">Gagal memuat data dari server</td></tr>';
+            }
+        }
+
+        async function updateStatus(id, status) {
+            try {
+                const response = await fetch('../api/testimonials.php?action=update_status', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ id, status })
+                });
+                const result = await response.json();
+                if (result.success) {
+                    showToast('Status berhasil diperbarui', 'success');
+                    loadTestimonialsAdmin();
+                } else {
+                    showToast(result.message || 'Gagal memperbarui status', 'error');
+                }
+            } catch (e) {
+                showToast('Gagal terhubung ke server', 'error');
+            }
+        }
+
+        async function deleteTestimonial(id) {
+            if (!confirm('Yakin ingin menghapus testimonial ini secara permanen?')) return;
+            try {
+                const response = await fetch('../api/testimonials.php?action=delete', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ id })
+                });
+                const result = await response.json();
+                if (result.success) {
+                    showToast('Testimonial berhasil dihapus', 'success');
+                    loadTestimonialsAdmin();
+                } else {
+                    showToast(result.message || 'Gagal menghapus testimonial', 'error');
+                }
+            } catch (e) {
+                showToast('Gagal terhubung ke server', 'error');
+            }
+        }
+    </script>
+</body>
+
+</html>

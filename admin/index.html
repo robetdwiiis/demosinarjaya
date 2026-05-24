@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Admin - SINAR JAYA KONVEKSI</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/admin.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="../js/admin/auth.js"></script>
+</head>
+
+<body>
+    <div class="admin-wrapper">
+        <!-- Sidebar -->
+        <aside class="admin-sidebar">
+            <div class="sidebar-header">
+                <div class="logo-text">SINAR JAYA<span>KONVEKSI</span></div>
+                <button class="sidebar-toggle"><i class="fas fa-times"></i></button>
+            </div>
+
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <span class="nav-section-title">Menu Utama</span>
+                    <a href="index.html" class="nav-item active"><i class="fas fa-home"></i><span>Dashboard</span></a>
+                    <a href="products.html" class="nav-item"><i class="fas fa-box"></i><span>Manajemen Produk</span></a>
+                    <a href="gallery.html" class="nav-item"><i class="fas fa-images"></i><span>Galeri Foto</span></a>
+                    <a href="prediction.html" class="nav-item"><i class="fas fa-chart-line"></i><span>Prediksi
+                            Stok</span></a>
+                    <a href="reports.html" class="nav-item"><i class="fas fa-file-alt"></i><span>Laporan</span></a>
+                    <a href="messages.html" class="nav-item"><i class="fas fa-envelope"></i><span>Pesan Masuk</span></a>
+                    <a href="testimonials.html" class="nav-item"><i class="fas fa-star"></i><span>Testimonial</span></a>
+                </div>
+
+                <div class="nav-section">
+                    <span class="nav-section-title">Pengaturan</span>
+                    <a href="settings.html" class="nav-item"><i class="fas fa-cog"></i><span>Pengaturan</span></a>
+                    <a href="#" onclick="logout(); return false;" class="nav-item" style="color: var(--danger);"><i
+                            class="fas fa-sign-out-alt"></i><span>Keluar</span></a>
+                </div>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="user-info">
+                    <div class="user-avatar">AD</div>
+                    <div class="user-details">
+                        <strong>Admin</strong>
+                        <span>Administrator</span>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="admin-main">
+            <header class="admin-header">
+                <div class="header-left">
+                    <button class="mobile-toggle"><i class="fas fa-bars"></i></button>
+                    <div class="page-title">
+                        <h4>Dashboard</h4>
+                        <span>Selamat datang kembali, Admin!</span>
+                    </div>
+                </div>
+                <div class="header-right">
+                    <div class="notification-wrapper">
+                        <button class="header-icon notification-trigger" id="notification-btn">
+                            <i class="fas fa-bell"></i>
+                            <span class="badge" id="notification-badge"></span>
+                        </button>
+                        <div class="notification-dropdown" id="notification-dropdown">
+                            <div class="notification-header">
+                                <h6><i class="fas fa-bell"></i> Notifikasi</h6>
+                                <button class="mark-all-read" onclick="markAllRead()">Tandai dibaca</button>
+                            </div>
+                            <div class="notification-list" id="notification-list">
+                                <div class="notification-loading">
+                                    <i class="fas fa-spinner fa-spin"></i> Memuat...
+                                </div>
+                            </div>
+                            <div class="notification-footer">
+                                <a href="messages.html">Lihat Semua Pesan <i class="fas fa-arrow-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="../index.html" class="btn btn-sm btn-secondary"><i class="fas fa-external-link-alt"></i>
+                        Lihat Website</a>
+                </div>
+            </header>
+
+            <div class="admin-content">
+                <!-- Stats Cards -->
+                <div class="stats-cards">
+                    <div class="stat-card" id="total-products">
+                        <div class="stat-card-icon primary"><i class="fas fa-box"></i></div>
+                        <div class="stat-card-info">
+                            <h3>0</h3>
+                            <span>Total Produk</span>
+                        </div>
+                        <div class="stat-card-trend up"><i class="fas fa-arrow-up"></i> +12%</div>
+                    </div>
+
+                    <div class="stat-card" id="total-stock">
+                        <div class="stat-card-icon success"><i class="fas fa-warehouse"></i></div>
+                        <div class="stat-card-info">
+                            <h3>0</h3>
+                            <span>Total Stok</span>
+                        </div>
+                        <div class="stat-card-trend up"><i class="fas fa-arrow-up"></i> +8%</div>
+                    </div>
+
+                    <div class="stat-card" id="total-sales">
+                        <div class="stat-card-icon warning"><i class="fas fa-shopping-cart"></i></div>
+                        <div class="stat-card-info">
+                            <h3>0</h3>
+                            <span>Penjualan (Unit)</span>
+                        </div>
+                        <div class="stat-card-trend up"><i class="fas fa-arrow-up"></i> +15%</div>
+                    </div>
+
+                    <div class="stat-card" id="low-stock">
+                        <div class="stat-card-icon danger"><i class="fas fa-exclamation-triangle"></i></div>
+                        <div class="stat-card-info">
+                            <h3>0</h3>
+                            <span>Stok Menipis</span>
+                        </div>
+                        <div class="stat-card-trend down"><i class="fas fa-arrow-down"></i> Perhatian</div>
+                    </div>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 1.5rem;">
+                    <!-- Sales Chart -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h5><i class="fas fa-chart-area" style="margin-right: 0.5rem; color: var(--primary);"></i>
+                                Grafik Penjualan</h5>
+                            <select
+                                style="padding: 0.5rem; border: 1px solid var(--gray-200); border-radius: var(--radius);">
+                                <option>2025</option>
+                                <option>2024</option>
+                            </select>
+                        </div>
+                        <div class="card-body">
+                            <div class="chart-container">
+                                <canvas id="salesChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Low Stock Alert -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h5><i class="fas fa-exclamation-circle"
+                                    style="margin-right: 0.5rem; color: var(--warning);"></i> Stok Menipis</h5>
+                            <a href="products.html" class="btn btn-sm btn-secondary">Lihat Semua</a>
+                        </div>
+                        <div class="card-body" id="low-stock-list">
+                            <!-- Loaded by JS -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Products -->
+                <div class="card" style="margin-top: 1.5rem;">
+                    <div class="card-header">
+                        <h5><i class="fas fa-clock" style="margin-right: 0.5rem; color: var(--primary);"></i> Produk
+                            Terbaru</h5>
+                        <a href="products.html" class="btn btn-sm btn-secondary">Kelola Produk</a>
+                    </div>
+                    <div class="card-body" id="recent-products">
+                        <!-- Loaded by JS -->
+                    </div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="quick-actions-grid">
+                    <a href="products.html" class="quick-action-card primary">
+                        <i class="fas fa-plus-circle" style="color: var(--primary);"></i>
+                        <h6>Tambah Produk</h6>
+                    </a>
+                    <a href="prediction.html" class="quick-action-card success">
+                        <i class="fas fa-chart-line" style="color: var(--success);"></i>
+                        <h6>Prediksi Stok</h6>
+                    </a>
+                    <a href="reports.html" class="quick-action-card warning">
+                        <i class="fas fa-file-pdf" style="color: var(--warning);"></i>
+                        <h6>Buat Laporan</h6>
+                    </a>
+                    <a href="settings.html" class="quick-action-card secondary">
+                        <i class="fas fa-cog" style="color: var(--gray-500);"></i>
+                        <h6>Pengaturan</h6>
+                    </a>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="../js/data.js"></script>
+    <script src="../js/main.js"></script>
+    <script src="../js/admin/dashboard.js"></script>
+    <script src="../js/admin/notifications.js"></script>
+</body>
+
+</html>

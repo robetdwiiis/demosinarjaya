@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manajemen Galeri - SINAR JAYA KONVEKSI</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/admin.css">
+    <script src="../js/admin/auth.js"></script>
+</head>
+
+<body>
+    <div class="admin-wrapper">
+        <!-- Sidebar -->
+        <aside class="admin-sidebar">
+            <div class="sidebar-header">
+                <div class="logo-text">SINAR JAYA<span>KONVEKSI</span></div>
+                <button class="sidebar-toggle"><i class="fas fa-times"></i></button>
+            </div>
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <span class="nav-section-title">Menu Utama</span>
+                    <a href="index.html" class="nav-item"><i class="fas fa-home"></i><span>Dashboard</span></a>
+                    <a href="products.html" class="nav-item"><i class="fas fa-box"></i><span>Manajemen
+                            Produk</span></a>
+                    <a href="gallery.html" class="nav-item active"><i class="fas fa-images"></i><span>Galeri
+                            Foto</span></a>
+                    <a href="prediction.html" class="nav-item"><i class="fas fa-chart-line"></i><span>Prediksi
+                            Stok</span></a>
+                    <a href="reports.html" class="nav-item"><i class="fas fa-file-alt"></i><span>Laporan</span></a>
+                    <a href="messages.html" class="nav-item"><i class="fas fa-envelope"></i><span>Pesan Masuk</span></a>
+                    <a href="testimonials.html" class="nav-item"><i class="fas fa-star"></i><span>Testimonial</span></a>
+                </div>
+                <div class="nav-section">
+                    <span class="nav-section-title">Pengaturan</span>
+                    <a href="settings.html" class="nav-item"><i class="fas fa-cog"></i><span>Pengaturan</span></a>
+                    <a href="#" onclick="logout(); return false;" class="nav-item" style="color: var(--danger);"><i
+                            class="fas fa-sign-out-alt"></i><span>Keluar</span></a>
+                </div>
+            </nav>
+            <div class="sidebar-footer">
+                <div class="user-info">
+                    <div class="user-avatar">AD</div>
+                    <div class="user-details"><strong>Admin</strong><span>Administrator</span></div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="admin-main">
+            <header class="admin-header">
+                <div class="header-left">
+                    <button class="mobile-toggle"><i class="fas fa-bars"></i></button>
+                    <div class="page-title">
+                        <h4>Manajemen Galeri</h4>
+                        <span>Kelola foto dokumentasi dan portfolio</span>
+                    </div>
+                </div>
+                <div class="header-right">
+                    <div class="notification-wrapper">
+                        <button class="header-icon notification-trigger" id="notification-btn">
+                            <i class="fas fa-bell"></i>
+                            <span class="badge" id="notification-badge"></span>
+                        </button>
+                        <div class="notification-dropdown" id="notification-dropdown">
+                            <div class="notification-header">
+                                <h6><i class="fas fa-bell"></i> Notifikasi</h6>
+                                <button class="mark-all-read" onclick="markAllRead()">Tandai dibaca</button>
+                            </div>
+                            <div class="notification-list" id="notification-list">
+                                <div class="notification-loading">
+                                    <i class="fas fa-spinner fa-spin"></i> Memuat...
+                                </div>
+                            </div>
+                            <div class="notification-footer">
+                                <a href="messages.html">Lihat Semua Pesan <i class="fas fa-arrow-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="../gallery.html" class="btn btn-sm btn-secondary"><i class="fas fa-external-link-alt"></i>
+                        Lihat Galeri</a>
+                </div>
+            </header>
+
+            <div class="admin-content">
+                <!-- Toolbar -->
+                <div class="toolbar">
+                    <div style="display: flex; gap: 1rem; align-items: center;">
+                        <select id="filter-category" class="form-input" style="width: auto; padding: 0.75rem 1rem;">
+                            <option value="all">Semua Kategori</option>
+                            <option value="produksi">Produksi</option>
+                            <option value="kegiatan">Kegiatan</option>
+                            <option value="produk">Produk</option>
+                            <option value="lainnya">Lainnya</option>
+                        </select>
+                    </div>
+                    <div class="toolbar-actions">
+                        <button class="btn btn-primary" onclick="openAddGallery()">
+                            <i class="fas fa-plus"></i> Tambah Foto
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Gallery Grid -->
+                <div class="gallery-management-grid" id="gallery-grid">
+                    <!-- Loaded by JS -->
+                </div>
+
+                <!-- If empty state needed -->
+                <div id="gallery-empty-state"
+                    style="display: none; text-align: center; padding: 3rem; color: var(--gray-500);">
+                    <i class="fas fa-images" style="font-size: 3rem; margin-bottom: 1rem; color: var(--gray-300);"></i>
+                    <p>Belum ada foto di galeri. Silakan tambahkan foto baru.</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Gallery Modal -->
+    <div class="modal" id="gallery-modal">
+        <div class="modal-content" style="max-width: 600px;">
+            <div class="modal-header">
+                <h4 id="modal-title">Tambah Foto Baru</h4>
+                <button class="modal-close" onclick="closeModal('gallery-modal')"><i class="fas fa-times"></i></button>
+            </div>
+            <form id="gallery-form">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label class="form-label">Judul Foto <span class="required">*</span></label>
+                        <input type="text" id="gallery-title" class="form-input" required
+                            placeholder="Contoh: Kegiatan Produksi 2024">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Kategori <span class="required">*</span></label>
+                        <select id="gallery-category" class="form-input form-select" required>
+                            <option value="">Pilih Kategori</option>
+                            <option value="produksi">Produksi</option>
+                            <option value="kegiatan">Kegiatan</option>
+                            <option value="produk">Produk</option>
+                            <option value="lainnya">Lainnya</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Gambar <span class="required">*</span></label>
+                        <div class="image-upload-container">
+                            <div class="file-preview-main" id="image-preview">
+                                <div class="no-image-placeholder">
+                                    <i class="fas fa-image"></i>
+                                    <span>Preview Gambar</span>
+                                </div>
+                            </div>
+
+                            <div class="upload-options">
+                                <input type="file" id="gallery-image-input" accept="image/*" style="display: none;">
+                                <button type="button" class="btn-upload-box"
+                                    onclick="document.getElementById('gallery-image-input').click()"
+                                    style="width: 100%;">
+                                    <i class="fas fa-cloud-upload-alt"></i>
+                                    <span>Upload Foto</span>
+                                </button>
+
+                                <div class="url-input-box">
+                                    <input type="url" id="gallery-image-url" class="form-input-sm"
+                                        placeholder="Atau tempel URL gambar...">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Deskripsi Singkat</label>
+                        <textarea id="gallery-description" class="form-input" rows="2"
+                            placeholder="Keterangan tambahan (opsional)..."></textarea>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="closeModal('gallery-modal')">
+                        <i class="fas fa-times"></i> Batal
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save"></i> Simpan
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <style>
+        .gallery-management-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .gallery-card {
+            background: white;
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--gray-200);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .gallery-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .gallery-card-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-bottom: 1px solid var(--gray-100);
+        }
+
+        .gallery-card-body {
+            padding: 1rem;
+        }
+
+        .gallery-card-info h5 {
+            margin: 0 0 0.5rem 0;
+            font-size: 1rem;
+            color: var(--gray-900);
+        }
+
+        .gallery-card-meta {
+            font-size: 0.8rem;
+            color: var(--gray-500);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .gallery-card-actions {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            display: flex;
+            gap: 5px;
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+
+        .gallery-card:hover .gallery-card-actions {
+            opacity: 1;
+        }
+
+        .action-btn {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gray-600);
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: all 0.2s;
+        }
+
+        .action-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .action-btn.edit:hover {
+            background: var(--accent);
+            color: white;
+        }
+
+        .action-btn.delete:hover {
+            background: var(--danger);
+            color: white;
+        }
+    </style>
+
+    <script src="../js/data.js?v=4"></script>
+    <script src="../js/main.js?v=4"></script>
+    <script src="../js/admin/gallery.js?v=4"></script>
+    <script src="../js/admin/notifications.js"></script>
+    <script>
+        // Initialize sidebar toggle
+        document.querySelector('.mobile-toggle')?.addEventListener('click', () => {
+            document.querySelector('.admin-sidebar')?.classList.toggle('open');
+        });
+        document.querySelector('.sidebar-toggle')?.addEventListener('click', () => {
+            document.querySelector('.admin-sidebar')?.classList.remove('open');
+        });
+    </script>
+</body>
+
+</html>

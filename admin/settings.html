@@ -1,0 +1,1767 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pengaturan - SINAR JAYA KONVEKSI</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/style.css?v=4">
+    <link rel="stylesheet" href="../css/admin.css?v=4">
+    <style>
+        /* Upload Component Styles */
+        .upload-container {
+            position: relative;
+        }
+
+        .file-upload {
+            border: 2px dashed var(--gray-300);
+            border-radius: var(--radius-lg);
+            padding: 1.5rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: var(--gray-50);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .file-upload:hover {
+            border-color: var(--primary);
+            background: rgba(30, 64, 175, 0.05);
+        }
+
+        .file-upload.dragover {
+            border-color: var(--primary);
+            background: rgba(30, 64, 175, 0.1);
+            transform: scale(1.02);
+        }
+
+        .upload-preview {
+            position: relative;
+            width: 100%;
+        }
+
+        .upload-preview img {
+            max-width: 100%;
+            max-height: 200px;
+            border-radius: var(--radius);
+            object-fit: contain;
+        }
+
+        .upload-preview .remove-btn {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            color: white;
+            border: 2px solid white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            box-shadow: 0 2px 8px rgba(239, 68, 68, 0.4);
+            transition: all 0.2s ease;
+        }
+
+        .upload-preview .remove-btn:hover {
+            transform: scale(1.1);
+            background: linear-gradient(135deg, #dc2626, #b91c1c);
+        }
+
+        .upload-placeholder {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .upload-progress {
+            margin-top: 0.75rem;
+        }
+
+        .progress-bar {
+            height: 6px;
+            background: var(--gray-200);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), #3b82f6);
+            width: 0%;
+            transition: width 0.3s ease;
+            border-radius: 3px;
+        }
+
+        .progress-text {
+            font-size: 0.75rem;
+            color: var(--gray-500);
+            display: block;
+            text-align: center;
+            margin-top: 0.5rem;
+        }
+
+        .upload-success {
+            color: #16a34a;
+            font-size: 0.875rem;
+            margin-top: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+    </style>
+    <script src="../js/admin/auth.js"></script>
+</head>
+
+<body>
+    <div class="admin-wrapper">
+        <!-- Sidebar -->
+        <aside class="admin-sidebar">
+            <div class="sidebar-header">
+                <div class="logo-text">SINAR JAYA<span>KONVEKSI</span></div>
+                <button class="sidebar-toggle"><i class="fas fa-times"></i></button>
+            </div>
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <span class="nav-section-title">Menu Utama</span>
+                    <a href="index.html" class="nav-item"><i class="fas fa-home"></i><span>Dashboard</span></a>
+                    <a href="products.html" class="nav-item"><i class="fas fa-box"></i><span>Manajemen Produk</span></a>
+                    <a href="gallery.html" class="nav-item"><i class="fas fa-images"></i><span>Galeri Foto</span></a>
+                    <a href="prediction.html" class="nav-item"><i class="fas fa-chart-line"></i><span>Prediksi
+                            Stok</span></a>
+                    <a href="reports.html" class="nav-item"><i class="fas fa-file-alt"></i><span>Laporan</span></a>
+                    <a href="messages.html" class="nav-item"><i class="fas fa-envelope"></i><span>Pesan Masuk</span></a>
+                    <a href="testimonials.html" class="nav-item"><i class="fas fa-star"></i><span>Testimonial</span></a>
+                </div>
+                <div class="nav-section">
+                    <span class="nav-section-title">Pengaturan</span>
+                    <a href="settings.html" class="nav-item active"><i
+                            class="fas fa-cog"></i><span>Pengaturan</span></a>
+                    <a href="#" onclick="logout(); return false;" class="nav-item" style="color: var(--danger);"><i
+                            class="fas fa-sign-out-alt"></i><span>Keluar</span></a>
+                </div>
+            </nav>
+            <div class="sidebar-footer">
+                <div class="user-info">
+                    <div class="user-avatar">AD</div>
+                    <div class="user-details"><strong>Admin</strong><span>Administrator</span></div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="admin-main">
+            <header class="admin-header">
+                <div class="header-left">
+                    <button class="mobile-toggle"><i class="fas fa-bars"></i></button>
+                    <div class="page-title">
+                        <h4>Pengaturan</h4>
+                        <span>Kelola pengaturan website dan profil</span>
+                    </div>
+                </div>
+                <div class="header-right">
+                    <div class="notification-wrapper">
+                        <button class="header-icon notification-trigger" id="notification-btn">
+                            <i class="fas fa-bell"></i>
+                            <span class="badge" id="notification-badge"></span>
+                        </button>
+                        <div class="notification-dropdown" id="notification-dropdown">
+                            <div class="notification-header">
+                                <h6><i class="fas fa-bell"></i> Notifikasi</h6>
+                                <button class="mark-all-read" onclick="markAllRead()">Tandai dibaca</button>
+                            </div>
+                            <div class="notification-list" id="notification-list">
+                                <div class="notification-loading">
+                                    <i class="fas fa-spinner fa-spin"></i> Memuat...
+                                </div>
+                            </div>
+                            <div class="notification-footer">
+                                <a href="messages.html">Lihat Semua Pesan <i class="fas fa-arrow-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="../index.html" class="btn btn-sm btn-secondary"><i class="fas fa-external-link-alt"></i>
+                        Lihat Website</a>
+                </div>
+            </header>
+
+            <div class="admin-content">
+                <div style="display: grid; grid-template-columns: 250px 1fr; gap: 1.5rem;">
+                    <!-- Settings Navigation -->
+                    <div class="card" style="height: fit-content;">
+                        <div class="card-body" style="padding: 0.5rem;">
+                            <button class="settings-nav-btn active" onclick="showSettingsSection('profile')"
+                                style="width: 100%; text-align: left;">
+                                <i class="fas fa-user"></i> Profil Admin
+                            </button>
+                            <button class="settings-nav-btn" onclick="showSettingsSection('company')"
+                                style="width: 100%; text-align: left;">
+                                <i class="fas fa-building"></i> Profil Perusahaan
+                            </button>
+                            <button class="settings-nav-btn" onclick="showSettingsSection('website')"
+                                style="width: 100%; text-align: left;">
+                                <i class="fas fa-globe"></i> Pengaturan Website
+                            </button>
+                            <button class="settings-nav-btn" onclick="showSettingsSection('users')"
+                                style="width: 100%; text-align: left;">
+                                <i class="fas fa-users"></i> Manajemen User
+                            </button>
+                            <hr style="margin: 0.5rem 0; border: none; border-top: 1px solid var(--gray-700);">
+                            <button class="settings-nav-btn" onclick="showSettingsSection('reset')"
+                                style="width: 100%; text-align: left; color: var(--danger);">
+                                <i class="fas fa-trash-alt"></i> Reset Data
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Settings Content -->
+                    <div>
+                        <!-- Profile Settings -->
+                        <div id="profile-section" class="settings-section">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5><i class="fas fa-user" style="margin-right: 0.5rem; color: var(--primary);"></i>
+                                        Profil Admin</h5>
+                                </div>
+                                <div class="card-body">
+                                    <form id="profile-form">
+                                        <div
+                                            style="display: flex; align-items: center; gap: 2rem; margin-bottom: 2rem;">
+                                            <div id="profile-avatar-display"
+                                                style="width: 100px; height: 100px; border-radius: 50%; background: var(--primary-gradient); display: flex; align-items: center; justify-content: center; font-size: 2.5rem; color: white; font-weight: 700; background-size: cover; background-position: center;">
+                                            </div>
+                                            <div>
+                                                <h5 style="margin-bottom: 0.5rem;">Administrator</h5>
+                                                <p style="color: var(--gray-500); margin-bottom: 1rem;">
+                                                    admin@sinarjaya.com</p>
+                                                <button type="button" class="btn btn-sm btn-secondary"
+                                                    onclick="document.getElementById('profile-upload-input').click()">
+                                                    <i class="fas fa-camera"></i> Ubah Foto
+                                                </button>
+                                                <input type="file" id="profile-upload-input" accept="image/*"
+                                                    style="display: none;" onchange="handleProfileUpload(this)">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-row">
+                                            <div class="form-group">
+                                                <label class="form-label">Nama Lengkap</label>
+                                                <input type="text" class="form-input" id="admin-name"
+                                                    value="Administrator" placeholder="Nama lengkap">
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="form-label">Email</label>
+                                                <input type="email" class="form-input" id="admin-email"
+                                                    value="admin@sinarjaya.com" placeholder="Email">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-row">
+                                            <div class="form-group">
+                                                <label class="form-label">No. Telepon</label>
+                                                <input type="tel" class="form-input" id="admin-phone"
+                                                    value="+62 812 3456 7890" placeholder="No. Telepon">
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="form-label">Role</label>
+                                                <input type="text" class="form-input" value="Super Admin" disabled>
+                                            </div>
+                                        </div>
+
+                                        <hr
+                                            style="margin: 2rem 0; border: none; border-top: 1px solid var(--gray-200);">
+
+                                        <h6 style="margin-bottom: 1rem;">Ubah Password</h6>
+                                        <div class="form-row">
+                                            <div class="form-group">
+                                                <label class="form-label">Password Lama</label>
+                                                <input type="password" class="form-input"
+                                                    placeholder="Masukkan password lama">
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="form-label">Password Baru</label>
+                                                <input type="password" class="form-input"
+                                                    placeholder="Masukkan password baru">
+                                            </div>
+                                        </div>
+
+                                        <div
+                                            style="display: flex; justify-content: flex-end; gap: 1rem; margin-top: 1.5rem;">
+                                            <button type="button" class="btn btn-secondary">Batal</button>
+                                            <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i>
+                                                Simpan Perubahan</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Company Settings -->
+                        <div id="company-section" class="settings-section" style="display: none;">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5><i class="fas fa-building"
+                                            style="margin-right: 0.5rem; color: var(--primary);"></i> Profil Perusahaan
+                                    </h5>
+                                </div>
+                                <div class="card-body">
+                                    <form id="company-form">
+                                        <div class="form-group">
+                                            <label class="form-label">Nama Perusahaan</label>
+                                            <input type="text" class="form-input" id="company-name"
+                                                value="SINAR JAYA KONVEKSI">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="form-label">Tagline</label>
+                                            <input type="text" class="form-input" id="company-tagline"
+                                                value="Konveksi Berkualitas Sejak 2017">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="form-label">Deskripsi</label>
+                                            <textarea class="form-input" id="company-description"
+                                                rows="5">Sinar Jaya Konveksi adalah sebuah usaha industri yang telah beroperasi sejak tahun 2017 hingga saat ini. Berlokasi di Desa Padurenan, Kecamatan Gebog, Kabupaten Kudus. Usaha ini didirikan oleh dua bersaudara, yaitu Bapak Muhammad Salim dan Bapak Muhammad Salman Alfarisi. Selain usaha konveksi, mereka juga mendirikan sebuah pondok pesantren putri yang berlokasi di sekitar lingkungan konveksi.</textarea>
+                                        </div>
+
+                                        <div class="form-row">
+                                            <div class="form-group">
+                                                <label class="form-label">Tahun Berdiri</label>
+                                                <input type="text" class="form-input" id="company-year" value="2017">
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="form-label">Jumlah Karyawan</label>
+                                                <input type="text" class="form-input" id="company-employees"
+                                                    value="32 Karyawan">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-row">
+                                            <div class="form-group">
+                                                <label class="form-label">Pendiri</label>
+                                                <input type="text" class="form-input" id="company-founders"
+                                                    value="Muhammad Salim & Muhammad Salman Alfarisi">
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="form-label">Jenis Karyawan</label>
+                                                <input type="text" class="form-input" id="company-types"
+                                                    value="Harian, Borongan, Admin">
+                                            </div>
+                                        </div>
+
+                                        <hr
+                                            style="margin: 2rem 0; border: none; border-top: 1px solid var(--gray-200);">
+
+                                        <h6 style="margin-bottom: 1rem;"><i class="fas fa-phone-alt"
+                                                style="margin-right: 0.5rem; color: var(--primary);"></i> Kontak
+                                        </h6>
+
+                                        <div class="form-row">
+                                            <div class="form-group">
+                                                <label class="form-label">WhatsApp</label>
+                                                <input type="tel" class="form-input" id="company-whatsapp"
+                                                    value="+62 856 4735 2998">
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="form-label">Telepon</label>
+                                                <input type="tel" class="form-input" id="company-phone"
+                                                    value="+62 856 4735 2998">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="form-label">Email</label>
+                                            <input type="email" class="form-input" id="company-email"
+                                                value="info@sinarjaya-konveksi.com">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="form-label">Alamat Lengkap</label>
+                                            <textarea class="form-input" id="company-address"
+                                                rows="3">Desa Padurenan, Kecamatan Gebog, Kabupaten Kudus, Jawa Tengah 59354</textarea>
+                                        </div>
+
+                                        <hr
+                                            style="margin: 2rem 0; border: none; border-top: 1px solid var(--gray-200);">
+
+                                        <h6 style="margin-bottom: 1rem;"><i class="fas fa-clock"
+                                                style="margin-right: 0.5rem; color: var(--success);"></i> Jam
+                                            Operasional</h6>
+
+                                        <div class="form-row">
+                                            <div class="form-group">
+                                                <label class="form-label">Senin - Jumat</label>
+                                                <input type="text" class="form-input" id="company-hours-weekday"
+                                                    value="08:00 - 17:00 WIB">
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="form-label">Sabtu</label>
+                                                <input type="text" class="form-input" id="company-hours-saturday"
+                                                    value="08:00 - 12:00 WIB">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="form-label">Minggu & Hari Libur</label>
+                                            <input type="text" class="form-input" id="company-hours-sunday"
+                                                value="Tutup">
+                                        </div>
+
+                                        <hr
+                                            style="margin: 2rem 0; border: none; border-top: 1px solid var(--gray-200);">
+
+                                        <h6 style="margin-bottom: 1rem;"><i class="fas fa-bullseye"
+                                                style="margin-right: 0.5rem; color: var(--primary);"></i> Visi &
+                                            Misi
+                                        </h6>
+
+                                        <div class="form-group">
+                                            <label class="form-label">Visi</label>
+                                            <textarea class="form-input" id="company-vision"
+                                                rows="2">Berkhidmat untuk umat dan mendekatkan umat kepada Allah SWT melalui sistem kerja islami dan pengenalan produk pakaian islami.</textarea>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="form-label">Misi</label>
+                                            <textarea class="form-input" id="company-mission" rows="6">1. Memberikan pelayanan dan kualitas produk terbaik kepada pelanggan
+2. Menerapkan nilai-nilai islam dalam setiap aktivitas pekerjaan
+3. Menjalin hubungan baik dengan para pelanggan agar terjadi peningkatan re-order dari pelanggan
+4. Menciptakan tenaga kerja yang berkompeten serta jujur dan amanah sesuai prinsip islam</textarea>
+                                        </div>
+
+                                        <hr
+                                            style="margin: 2rem 0; border: none; border-top: 1px solid var(--gray-200);">
+
+                                        <h6 style="margin-bottom: 1rem;"><i class="fas fa-box"
+                                                style="margin-right: 0.5rem; color: var(--warning);"></i> Produk
+                                            Utama
+                                        </h6>
+
+                                        <div class="form-group">
+                                            <label class="form-label">Produk yang Diproduksi</label>
+                                            <textarea class="form-input" id="company-products" rows="5">1. Seragam Sekolah - dirancang sesuai standar pendidikan untuk berbagai jenjang, mulai dari TK hingga SMA
+2. Pakaian Olahraga - terdiri atas atasan dan bawahan training, berbahan kain kaos yang dapat disesuaikan dengan kebutuhan konsumen
+3. Seragam PDH (Pakaian Dinas Harian) - umumnya dipesan oleh organisasi atau institusi yang menyesuaikan desain dengan memperhatikan aspek formalitas dan kenyamanan
+4. Jas Almamater - disesuaikan dengan kebutuhan institusi atau lembaga yang bersangkutan</textarea>
+                                        </div>
+
+                                        <div
+                                            style="display: flex; justify-content: flex-end; gap: 1rem; margin-top: 1.5rem;">
+                                            <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i>
+                                                Simpan</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Website Settings -->
+                        <div id="website-section" class="settings-section" style="display: none;">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5><i class="fas fa-globe"
+                                            style="margin-right: 0.5rem; color: var(--primary);"></i> Pengaturan Website
+                                    </h5>
+                                </div>
+                                <div class="card-body">
+                                    <form id="website-form">
+                                        <!-- Logo Upload -->
+                                        <div class="form-group">
+                                            <label class="form-label">Logo Website</label>
+                                            <div class="upload-container" style="max-width: 300px;">
+                                                <div class="file-upload" id="logo-dropzone"
+                                                    onclick="document.getElementById('logo-input').click()">
+                                                    <div class="upload-preview" id="logo-preview"
+                                                        style="display: none;">
+                                                        <img id="logo-preview-img" src="" alt="Logo Preview">
+                                                        <button type="button" class="remove-btn"
+                                                            onclick="event.stopPropagation(); removeUpload('logo')">
+                                                            <i class="fas fa-times"></i>
+                                                        </button>
+                                                    </div>
+                                                    <div class="upload-placeholder" id="logo-placeholder">
+                                                        <i class="fas fa-cloud-upload-alt"
+                                                            style="font-size: 2rem; color: var(--primary); margin-bottom: 0.5rem;"></i>
+                                                        <p style="margin: 0; font-weight: 600;">Klik atau drag file ke
+                                                            sini</p>
+                                                        <small style="color: var(--gray-500);">PNG, JPG (Max
+                                                            5MB)</small>
+                                                    </div>
+                                                    <input type="file" id="logo-input" accept="image/*"
+                                                        style="display: none;"
+                                                        onchange="handleFileSelect(this, 'logo')">
+                                                </div>
+                                                <!-- Progress Bar -->
+                                                <div class="upload-progress" id="logo-progress"
+                                                    style="display: none; margin-top: 1rem;">
+                                                    <div class="progress-bar">
+                                                        <div class="progress-fill" style="width: 0%;"></div>
+                                                    </div>
+                                                    <div class="progress-text">Mengunggah...</div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="form-label">Banner Hero</label>
+                                            <div class="upload-container">
+                                                <div class="file-upload" id="banner-dropzone"
+                                                    onclick="document.getElementById('banner-input').click()"
+                                                    style="min-height: 180px;">
+                                                    <div class="upload-preview" id="banner-preview"
+                                                        style="display: none;">
+                                                        <img id="banner-preview-img" src="" alt="Banner Preview">
+                                                        <button type="button" class="remove-btn"
+                                                            onclick="event.stopPropagation(); removeUpload('banner')">
+                                                            <i class="fas fa-times"></i>
+                                                        </button>
+                                                    </div>
+                                                    <div class="upload-placeholder" id="banner-placeholder">
+                                                        <i class="fas fa-image"
+                                                            style="font-size: 2.5rem; color: var(--primary); margin-bottom: 0.5rem;"></i>
+                                                        <p style="margin: 0; font-weight: 600;">Upload Banner</p>
+                                                    </div>
+                                                    <input type="file" id="banner-input" accept="image/*"
+                                                        style="display: none;"
+                                                        onchange="handleFileSelect(this, 'banner')">
+                                                </div>
+                                                <!-- Progress Bar -->
+                                                <div class="upload-progress" id="banner-progress"
+                                                    style="display: none; margin-top: 1rem;">
+                                                    <div class="progress-bar">
+                                                        <div class="progress-fill" style="width: 0%;"></div>
+                                                    </div>
+                                                    <div class="progress-text">Mengunggah...</div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <hr
+                                            style="margin: 2rem 0; border: none; border-top: 1px solid var(--gray-200);">
+
+                                        <h6 style="margin-bottom: 1rem;"><i class="fas fa-share-alt"
+                                                style="margin-right: 0.5rem; color: var(--primary);"></i> Social Media
+                                        </h6>
+                                        <div class="form-row">
+                                            <div class="form-group">
+                                                <label class="form-label"><i class="fab fa-facebook"
+                                                        style="color: #1877f2;"></i> Facebook</label>
+                                                <input type="url" class="form-input" id="social-facebook"
+                                                    placeholder="https://facebook.com/..." value="">
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="form-label"><i class="fab fa-instagram"
+                                                        style="color: #e4405f;"></i> Instagram</label>
+                                                <input type="url" class="form-input" id="social-instagram"
+                                                    placeholder="https://instagram.com/..." value="">
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="form-group">
+                                                <label class="form-label"><i class="fas fa-shopping-bag"
+                                                        style="color: #ee4d2d;"></i> Shopee</label>
+                                                <input type="url" class="form-input" id="social-shopee"
+                                                    placeholder="https://shopee.co.id/..." value="">
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="form-label"><i class="fab fa-tiktok"
+                                                        style="color: #000000;"></i> TikTok</label>
+                                                <input type="url" class="form-input" id="social-tiktok"
+                                                    placeholder="https://tiktok.com/@..." value="">
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="form-group">
+                                                <label class="form-label"><i class="fab fa-whatsapp"
+                                                        style="color: #25d366;"></i> WhatsApp</label>
+                                                <input type="text" class="form-input" id="social-whatsapp"
+                                                    placeholder="No. WhatsApp (Contoh: 6285...)" value="">
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="form-label"><i class="fas fa-globe"
+                                                        style="color: var(--primary);"></i> Website</label>
+                                                <input type="url" class="form-input" id="social-website"
+                                                    placeholder="https://example.com" value="">
+                                            </div>
+                                        </div>
+
+                                        <div
+                                            style="display: flex; justify-content: flex-end; gap: 1rem; margin-top: 1.5rem;">
+                                            <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i>
+                                                Simpan</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- User Management -->
+                        <div id="users-section" class="settings-section" style="display: none;">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5><i class="fas fa-users"
+                                            style="margin-right: 0.5rem; color: var(--primary);"></i> Manajemen User
+                                    </h5>
+                                    <button class="btn btn-primary btn-sm" onclick="openUserModal()">
+                                        <i class="fas fa-plus"></i> Tambah User
+                                    </button>
+                                </div>
+                                <div class="card-body">
+                                    <div id="users-loading" style="text-align: center; padding: 2rem;">
+                                        <i class="fas fa-spinner fa-spin"
+                                            style="font-size: 2rem; color: var(--primary);"></i>
+                                        <p style="margin-top: 1rem; color: var(--gray-500);">Memuat data user...</p>
+                                    </div>
+                                    <table class="data-table" id="users-table" style="display: none;">
+                                        <thead>
+                                            <tr>
+                                                <th>Nama</th>
+                                                <th>Email</th>
+                                                <th>Role</th>
+                                                <th>Status</th>
+                                                <th>Aksi</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="users-tbody">
+                                            <!-- Loaded dynamically -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- User Modal -->
+                        <div class="modal" id="user-modal">
+                            <div class="modal-content" style="max-width: 550px;">
+                                <div class="modal-header">
+                                    <h4 id="user-modal-title">Tambah User Baru</h4>
+                                    <button class="modal-close" onclick="closeUserModal()">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                </div>
+                                <form id="user-form" onsubmit="saveUser(event)">
+                                    <div class="modal-body">
+                                        <input type="hidden" id="user-id">
+
+                                        <div class="form-group">
+                                            <label class="form-label">Nama Lengkap <span
+                                                    style="color: var(--danger);">*</span></label>
+                                            <input type="text" class="form-input" id="user-nama" required
+                                                placeholder="Masukkan nama lengkap">
+                                        </div>
+
+                                        <div class="form-row">
+                                            <div class="form-group">
+                                                <label class="form-label">Username <span
+                                                        style="color: var(--danger);">*</span></label>
+                                                <input type="text" class="form-input" id="user-username" required
+                                                    placeholder="Username untuk login" pattern="[a-zA-Z0-9_]+"
+                                                    title="Hanya huruf, angka, dan underscore">
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="form-label">Email <span
+                                                        style="color: var(--danger);">*</span></label>
+                                                <input type="email" class="form-input" id="user-email" required
+                                                    placeholder="email@example.com">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="form-label">No. Telepon</label>
+                                            <input type="tel" class="form-input" id="user-telepon"
+                                                placeholder="Contoh: 081234567890">
+                                        </div>
+
+                                        <div class="form-row">
+                                            <div class="form-group">
+                                                <label class="form-label">Role <span
+                                                        style="color: var(--danger);">*</span></label>
+                                                <select class="form-input" id="user-role" required>
+                                                    <option value="operator">Operator</option>
+                                                    <option value="admin">Admin</option>
+                                                    <option value="super_admin">Super Admin</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="form-label">Status</label>
+                                                <select class="form-input" id="user-status">
+                                                    <option value="active">Aktif</option>
+                                                    <option value="inactive">Tidak Aktif</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <hr
+                                            style="margin: 1.5rem 0; border: none; border-top: 1px solid var(--gray-200);">
+
+                                        <div class="form-group">
+                                            <label class="form-label">
+                                                Password <span id="password-required"
+                                                    style="color: var(--danger);">*</span>
+                                                <small id="password-hint"
+                                                    style="color: var(--gray-500); font-weight: normal; display: none;">
+                                                    (Kosongkan jika tidak ingin mengubah)
+                                                </small>
+                                            </label>
+                                            <div style="position: relative;">
+                                                <input type="password" class="form-input" id="user-password"
+                                                    placeholder="Minimal 6 karakter" style="padding-right: 45px;">
+                                                <button type="button" onclick="togglePasswordVisibility()"
+                                                    style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: none; border: none; color: var(--gray-500); cursor: pointer;">
+                                                    <i class="fas fa-eye" id="password-toggle-icon"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            onclick="closeUserModal()">Batal</button>
+                                        <button type="submit" class="btn btn-primary" id="user-submit-btn">
+                                            <i class="fas fa-save"></i> Simpan
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                        <!-- Reset Data Section -->
+                        <div id="reset-section" class="settings-section" style="display: none;">
+                            <div class="card premium-danger-card">
+                                <div class="danger-glow"></div>
+                                <div class="card-body"
+                                    style="position: relative; z-index: 10; text-align: center; padding: 4rem 2rem;">
+
+                                    <!-- Animated Icon -->
+                                    <div class="danger-icon-wrapper">
+                                        <div class="pulse-ring"></div>
+                                        <i class="fas fa-biohazard"></i>
+                                    </div>
+
+                                    <h2 class="danger-title">ZONA BAHAYA</h2>
+                                    <p class="danger-subtitle">TINDAKAN INI BERSIFAT PERMANEN & TIDAK DAPAT DIBATALKAN
+                                    </p>
+
+                                    <!-- Warning Box -->
+                                    <div class="warning-box">
+                                        <ul>
+                                            <li><i class="fas fa-times-circle"></i> Menghapus SEMUA Data Produk</li>
+                                            <li><i class="fas fa-times-circle"></i> Menghapus Riwayat Transaksi</li>
+                                            <li><i class="fas fa-times-circle"></i> Mereset Stok Barang</li>
+                                            <li><i class="fas fa-check-circle" style="color: #10b981;"></i> Data
+                                                Kategori & Akun Admin Tetap Aman</li>
+                                        </ul>
+                                    </div>
+
+                                    <!-- Verification Form -->
+                                    <div class="verification-form">
+                                        <label>VERIFIKASI KEAMANAN DIMINTA</label>
+                                        <div class="input-group-premium">
+                                            <i class="fas fa-lock"></i>
+                                            <input type="password" id="reset-password"
+                                                placeholder="Masukkan Password Admin..." autocomplete="off">
+                                        </div>
+                                    </div>
+
+                                    <button id="btn-reset-data" class="btn-nuke" onclick="performReset()" disabled>
+                                        <i class="fas fa-trash-alt"></i> KONFIRMASI PENGHAPUSAN DATA
+                                    </button>
+                                </div>
+                            </div>
+
+                            <style>
+                                /* Premium Danger Theme */
+                                .premium-danger-card {
+                                    background: linear-gradient(145deg, #0f0f0f 0%, #1a0505 100%);
+                                    border: 1px solid #330000;
+                                    box-shadow: 0 0 50px rgba(0, 0, 0, 0.8);
+                                    position: relative;
+                                    overflow: hidden;
+                                    border-radius: 20px;
+                                }
+
+                                .danger-glow {
+                                    position: absolute;
+                                    top: -50%;
+                                    left: 50%;
+                                    transform: translateX(-50%);
+                                    width: 80%;
+                                    height: 50%;
+                                    background: radial-gradient(ellipse at center, rgba(220, 38, 38, 0.15) 0%, transparent 70%);
+                                    filter: blur(60px);
+                                    pointer-events: none;
+                                }
+
+                                .danger-icon-wrapper {
+                                    width: 100px;
+                                    height: 100px;
+                                    margin: 0 auto 2rem;
+                                    background: linear-gradient(135deg, #2a0a0a, #000);
+                                    border-radius: 50%;
+                                    display: flex;
+                                    align-items: center;
+                                    justify-content: center;
+                                    border: 2px solid #ef4444;
+                                    box-shadow: 0 0 30px rgba(220, 38, 38, 0.4);
+                                    position: relative;
+                                }
+
+                                .danger-icon-wrapper i {
+                                    font-size: 3rem;
+                                    color: #ef4444;
+                                    text-shadow: 0 0 10px rgba(220, 38, 38, 0.8);
+                                }
+
+                                .pulse-ring {
+                                    position: absolute;
+                                    top: 0;
+                                    left: 0;
+                                    right: 0;
+                                    bottom: 0;
+                                    border-radius: 50%;
+                                    border: 2px solid #ef4444;
+                                    animation: pulse-red 2s infinite;
+                                }
+
+                                @keyframes pulse-red {
+                                    0% {
+                                        transform: scale(1);
+                                        opacity: 0.8;
+                                    }
+
+                                    100% {
+                                        transform: scale(1.5);
+                                        opacity: 0;
+                                    }
+                                }
+
+                                .danger-title {
+                                    font-family: 'Outfit', sans-serif;
+                                    font-weight: 800;
+                                    font-size: 2.5rem;
+                                    letter-spacing: 4px;
+                                    background: linear-gradient(to bottom, #fff, #ef4444);
+                                    -webkit-background-clip: text;
+                                    background-clip: text;
+                                    -webkit-text-fill-color: transparent;
+                                    margin-bottom: 0.5rem;
+                                    text-transform: uppercase;
+                                }
+
+                                .danger-subtitle {
+                                    color: #ef4444;
+                                    font-size: 0.875rem;
+                                    letter-spacing: 2px;
+                                    font-weight: 600;
+                                    margin-bottom: 3rem;
+                                    opacity: 0.8;
+                                }
+
+                                .warning-box {
+                                    background: rgba(255, 255, 255, 0.03);
+                                    border: 1px solid rgba(255, 255, 255, 0.05);
+                                    border-radius: 12px;
+                                    padding: 1.5rem;
+                                    max-width: 500px;
+                                    margin: 0 auto 3rem;
+                                    text-align: left;
+                                }
+
+                                .warning-box ul {
+                                    list-style: none;
+                                    padding: 0;
+                                    margin: 0;
+                                }
+
+                                .warning-box li {
+                                    color: #cbd5e1;
+                                    margin-bottom: 0.75rem;
+                                    display: flex;
+                                    align-items: center;
+                                    gap: 0.75rem;
+                                    font-size: 0.95rem;
+                                }
+
+                                .warning-box li i {
+                                    color: #ef4444;
+                                    min-width: 20px;
+                                }
+
+                                .verification-form {
+                                    max-width: 400px;
+                                    margin: 0 auto;
+                                }
+
+                                .verification-form label {
+                                    display: block;
+                                    color: #64748b;
+                                    font-size: 0.75rem;
+                                    letter-spacing: 1px;
+                                    text-transform: uppercase;
+                                    margin-bottom: 1rem;
+                                }
+
+                                .input-group-premium {
+                                    position: relative;
+                                    margin-bottom: 2rem;
+                                }
+
+                                .input-group-premium i {
+                                    position: absolute;
+                                    left: 1.25rem;
+                                    top: 50%;
+                                    transform: translateY(-50%);
+                                    color: #64748b;
+                                    transition: color 0.3s;
+                                }
+
+                                .input-group-premium input {
+                                    width: 100%;
+                                    background: rgba(0, 0, 0, 0.3);
+                                    border: 1px solid #334155;
+                                    padding: 1rem 1rem 1rem 3rem;
+                                    border-radius: 12px;
+                                    color: white;
+                                    font-family: 'Outfit', sans-serif;
+                                    transition: all 0.3s;
+                                }
+
+                                .input-group-premium input:focus {
+                                    background: rgba(0, 0, 0, 0.5);
+                                    border-color: #ef4444;
+                                    outline: none;
+                                    box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.1);
+                                }
+
+                                .input-group-premium input:focus+i {
+                                    color: #ef4444;
+                                }
+
+                                .btn-nuke {
+                                    background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
+                                    border: none;
+                                    padding: 1.25rem 2.5rem;
+                                    color: white;
+                                    font-weight: 700;
+                                    letter-spacing: 1px;
+                                    border-radius: 50px;
+                                    cursor: pointer;
+                                    transition: all 0.3s;
+                                    box-shadow: 0 10px 30px rgba(220, 38, 38, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+                                    text-transform: uppercase;
+                                    font-size: 0.875rem;
+                                    width: 100%;
+                                    max-width: 400px;
+                                    opacity: 0.5;
+                                    /* Default disabled state visual */
+                                }
+
+                                .btn-nuke:not(:disabled):hover {
+                                    transform: translateY(-3px) scale(1.02);
+                                    box-shadow: 0 20px 40px rgba(220, 38, 38, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+                                    background: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%);
+                                }
+
+                                .btn-nuke:not(:disabled) {
+                                    opacity: 1;
+                                }
+
+                                .btn-nuke:active {
+                                    transform: translateY(1px);
+                                }
+                            </style>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="../js/data.js?v=3"></script>
+    <script src="../js/main.js?v=3"></script>
+    <script src="../js/admin/notifications.js"></script>
+    <script>
+        // Mobile sidebar toggle
+        document.querySelector('.mobile-toggle')?.addEventListener('click', () => {
+            document.querySelector('.admin-sidebar')?.classList.toggle('open');
+        });
+        document.querySelector('.sidebar-toggle')?.addEventListener('click', () => {
+            document.querySelector('.admin-sidebar')?.classList.remove('open');
+        });
+
+        // Settings Section Navigation
+        function showSettingsSection(section) {
+            // Update nav - remove active from all buttons
+            document.querySelectorAll('.settings-nav-btn').forEach(item => item.classList.remove('active'));
+            event.target.classList.add('active');
+
+            // Show/hide sections
+            document.querySelectorAll('.settings-section').forEach(s => s.style.display = 'none');
+            document.getElementById(`${section}-section`).style.display = 'block';
+        }
+
+        // ==================== DATA STORAGE & API ====================
+
+        // Sync all settings to database
+        async function saveToDatabase() {
+            try {
+                const profileData = JSON.parse(localStorage.getItem('profileSettings')) || {};
+                const websiteData = JSON.parse(localStorage.getItem('websiteSettings')) || {};
+
+                // Sync Company Data
+                const companyPromise = fetch('../api/settings.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        settings: {
+                            nama_perusahaan: profileData['company-name'] || '',
+                            tagline: profileData['company-tagline'] || '',
+                            deskripsi: profileData['company-description'] || '',
+                            tahun_berdiri: profileData['company-year'] || '',
+                            pendiri: profileData['company-founders'] || '',
+                            jumlah_karyawan: profileData['company-employees'] || '',
+                            telepon: profileData['company-phone'] || '',
+                            whatsapp: profileData['company-whatsapp'] || '',
+                            email: profileData['company-email'] || '',
+                            alamat: profileData['company-address'] || '',
+                            visi: profileData['company-vision'] || '',
+                            misi: profileData['company-mission'] || ''
+                        }
+                    })
+                });
+
+                // Sync Social Data
+                const socialPromise = fetch('../api/settings.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        settings: {
+                            facebook: websiteData['social-facebook'] || '',
+                            instagram: websiteData['social-instagram'] || '',
+                            shopee: websiteData['social-shopee'] || '',
+                            tiktok: websiteData['social-tiktok'] || '',
+                            whatsapp: websiteData['social-whatsapp'] || '',
+                            website: websiteData['social-website'] || ''
+                        }
+                    })
+                });
+
+                await Promise.all([companyPromise, socialPromise]);
+                console.log('Settings synchronized to database.');
+            } catch (error) {
+                console.error('Database sync error:', error);
+            }
+        }
+
+        // Load all settings from database
+        async function loadFromDatabase() {
+            try {
+                const response = await fetch('../api/settings.php');
+                const result = await response.json();
+
+                if (result.success && result.data) {
+                    const data = result.data;
+
+                    // Profile/Company Mapping
+                    if (data.general) {
+                        setVal('company-name', data.general.nama_perusahaan);
+                        setVal('company-tagline', data.general.tagline);
+                        setVal('company-year', data.general.tahun_berdiri);
+                        setVal('company-employees', data.general.jumlah_karyawan);
+                        setVal('company-founders', data.general.pendiri);
+                        setVal('company-description', data.general.deskripsi);
+                        setVal('company-vision', data.general.visi);
+                        setVal('company-mission', data.general.misi);
+                    }
+                    if (data.contact) {
+                        setVal('company-whatsapp', data.contact.whatsapp);
+                        setVal('company-phone', data.contact.telepon);
+                        setVal('company-email', data.contact.email);
+                        setVal('company-address', data.contact.alamat);
+                    }
+
+                    // Website/Social Mapping
+                    if (data.social) {
+                        setVal('social-facebook', data.social.facebook);
+                        setVal('social-instagram', data.social.instagram);
+                        setVal('social-shopee', data.social.shopee);
+                        setVal('social-tiktok', data.social.tiktok);
+                        setVal('social-whatsapp', data.social.whatsapp);
+                        setVal('social-website', data.social.website);
+                    }
+
+                    return true;
+                }
+            } catch (error) {
+                console.error('Error loading from database:', error);
+            }
+            return false;
+        }
+
+        function setVal(id, val) {
+            if (!val) return;
+            const el = document.getElementById(id);
+            if (el) el.value = val;
+        }
+
+        // ==================== INITIALIZE ====================
+        // Will be called at the end of the script to ensure all functions are defined
+
+        // Show last saved time
+        function getLastSaved(key) {
+            const data = getSettings(key);
+            if (data && data.updatedAt) {
+                return new Date(data.updatedAt).toLocaleString('id-ID');
+            }
+            return null;
+        }
+
+        // ==================== FILE UPLOAD FUNCTIONS ====================
+
+        // Handle file selection
+        function handleFileSelect(input, type) {
+            const file = input.files[0];
+            if (!file) return;
+
+            // Validate file type
+            const allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+            if (!allowedTypes.includes(file.type)) {
+                showToast('Tipe file tidak diizinkan. Gunakan: JPG, PNG, GIF, atau WEBP', 'error');
+                return;
+            }
+
+            // Validate file size (5MB)
+            if (file.size > 5 * 1024 * 1024) {
+                showToast('File terlalu besar. Maksimal 5MB', 'error');
+                return;
+            }
+
+            // Show preview
+            showPreview(file, type);
+
+            // Upload file
+            uploadFile(file, type);
+        }
+
+        // Show image preview
+        function showPreview(file, type) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                const preview = document.getElementById(`${type}-preview`);
+                const previewImg = document.getElementById(`${type}-preview-img`);
+                const placeholder = document.getElementById(`${type}-placeholder`);
+
+                previewImg.src = e.target.result;
+                preview.style.display = 'block';
+                placeholder.style.display = 'none';
+            };
+            reader.readAsDataURL(file);
+        }
+
+        // Upload file to server
+        async function uploadFile(file, type) {
+            const progressContainer = document.getElementById(`${type}-progress`);
+            const progressFill = progressContainer.querySelector('.progress-fill');
+            const progressText = progressContainer.querySelector('.progress-text');
+
+            progressContainer.style.display = 'block';
+            progressFill.style.width = '0%';
+            progressText.textContent = 'Uploading...';
+
+            const formData = new FormData();
+            formData.append('file', file);
+            formData.append('type', type);
+
+            try {
+                // Simulate progress
+                let progress = 0;
+                const progressInterval = setInterval(() => {
+                    progress += 10;
+                    if (progress <= 90) {
+                        progressFill.style.width = progress + '%';
+                    }
+                }, 100);
+
+                const response = await fetch('../api/upload.php', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                clearInterval(progressInterval);
+                progressFill.style.width = '100%';
+
+                const result = await response.json();
+
+                if (result.success) {
+                    progressText.innerHTML = '<i class="fas fa-check-circle" style="color: #16a34a;"></i> Upload berhasil!';
+                    showToast(`${type === 'logo' ? 'Logo' : 'Banner'} berhasil diupload!`, 'success');
+
+                    // Store uploaded file path in localStorage
+                    localStorage.setItem(`uploaded_${type}`, result.filepath);
+
+                    // Hide progress after 2 seconds
+                    setTimeout(() => {
+                        progressContainer.style.display = 'none';
+                    }, 2000);
+                } else {
+                    throw new Error(result.message);
+                }
+            } catch (error) {
+                progressFill.style.width = '0%';
+                progressText.innerHTML = '<i class="fas fa-times-circle" style="color: #dc2626;"></i> Upload gagal';
+                showToast('Gagal mengupload file: ' + error.message, 'error');
+
+                // Reset preview on error
+                setTimeout(() => {
+                    removeUpload(type);
+                    progressContainer.style.display = 'none';
+                }, 2000);
+            }
+        }
+
+        // Remove uploaded file
+        function removeUpload(type) {
+            const preview = document.getElementById(`${type}-preview`);
+            const previewImg = document.getElementById(`${type}-preview-img`);
+            const placeholder = document.getElementById(`${type}-placeholder`);
+            const input = document.getElementById(`${type}-input`);
+            const progressContainer = document.getElementById(`${type}-progress`);
+
+            previewImg.src = '';
+            preview.style.display = 'none';
+            placeholder.style.display = 'flex';
+            input.value = '';
+            progressContainer.style.display = 'none';
+
+            // Remove from localStorage
+            localStorage.removeItem(`uploaded_${type}`);
+        }
+
+        // Initialize drag and drop
+        function initDragDrop() {
+            ['logo', 'banner'].forEach(type => {
+                const dropzone = document.getElementById(`${type}-dropzone`);
+                if (!dropzone) return;
+
+                // Prevent default behaviors
+                ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+                    dropzone.addEventListener(eventName, preventDefaults, false);
+                });
+
+                function preventDefaults(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                }
+
+                // Highlight on drag
+                ['dragenter', 'dragover'].forEach(eventName => {
+                    dropzone.addEventListener(eventName, () => {
+                        dropzone.classList.add('dragover');
+                    }, false);
+                });
+
+                ['dragleave', 'drop'].forEach(eventName => {
+                    dropzone.addEventListener(eventName, () => {
+                        dropzone.classList.remove('dragover');
+                    }, false);
+                });
+
+                // Handle drop
+                dropzone.addEventListener('drop', (e) => {
+                    const files = e.dataTransfer.files;
+                    if (files.length > 0) {
+                        const input = document.getElementById(`${type}-input`);
+                        input.files = files;
+                        handleFileSelect(input, type);
+                    }
+                }, false);
+            });
+        }
+
+        // Load existing uploads from localStorage
+        function loadExistingUploads() {
+            ['logo', 'banner'].forEach(type => {
+                const savedPath = localStorage.getItem(`uploaded_${type}`);
+                if (savedPath) {
+                    const preview = document.getElementById(`${type}-preview`);
+                    const previewImg = document.getElementById(`${type}-preview-img`);
+                    const placeholder = document.getElementById(`${type}-placeholder`);
+
+                    previewImg.src = '../' + savedPath;
+                    preview.style.display = 'block';
+                    placeholder.style.display = 'none';
+                }
+            });
+        }
+
+        // ==================== CONSOLIDATED INITIALIZATION ====================
+        document.addEventListener('DOMContentLoaded', async () => {
+            // 1. Sidebar Toggle & Reset Logic
+            initGeneralUI();
+
+            // 2. Load Existing Data (API fallback to LocalStorage)
+            const dbLoaded = await loadFromDatabase();
+            if (!dbLoaded) {
+                loadAllSettings();
+                loadWebsiteSettings();
+            }
+
+            // 3. Setup File Uploads
+            initDragDrop();
+            loadExistingUploads();
+
+            // 4. Admin Profile Image
+            loadAdminProfileImage();
+
+            // 5. Setup Form Submission Handlers
+            setupFormHandlers();
+        });
+
+        // Perform Reset
+        async function performReset() {
+            const passwordInput = document.getElementById('reset-password');
+            if (!passwordInput || !passwordInput.value) {
+                showToast('Mohon masukkan password admin!', 'error');
+                return;
+            }
+
+            if (!confirm('PERINGATAN TERAKHIR: Semua data akan DIHAPUS PERMANEN. Anda yakin?')) {
+                return;
+            }
+
+            const btn = document.getElementById('btn-reset-data');
+            const originalText = btn.innerHTML;
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Memverifikasi...';
+
+            try {
+                const response = await fetch('../api/reset.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ password: passwordInput.value })
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    if (typeof Storage !== 'undefined' && typeof Storage.reset === 'function') {
+                        Storage.reset();
+                    } else {
+                        localStorage.removeItem('products');
+                        localStorage.removeItem('salesData');
+                        localStorage.removeItem('stockHistory');
+                        localStorage.removeItem('gallery');
+                        localStorage.removeItem('testimonials');
+                    }
+                    localStorage.removeItem('adminProfileImage');
+                    localStorage.removeItem('uploaded_logo');
+                    localStorage.removeItem('uploaded_banner');
+                    showToast('Data berhasil direset! Halaman akan dimuat ulang...', 'success');
+                    setTimeout(() => { window.location.reload(); }, 2000);
+                } else {
+
+                    showToast('Gagal reset data: ' + result.message, 'error');
+                    btn.disabled = false;
+                    btn.innerHTML = originalText;
+                }
+            } catch (error) {
+                console.error('Reset error:', error);
+                showToast('Terjadi kesalahan saat menghubungi server', 'error');
+                btn.disabled = false;
+                btn.innerHTML = originalText;
+            }
+        }
+
+        // Profile Image Upload
+        function handleProfileUpload(input) {
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+
+                reader.onload = function (e) {
+                    const avatar = document.getElementById('profile-avatar-display');
+                    if (avatar) {
+                        avatar.style.backgroundImage = `url('${e.target.result}')`;
+                        avatar.innerText = '';
+                        document.querySelectorAll('.user-avatar').forEach(el => {
+                            el.style.backgroundImage = `url('${e.target.result}')`;
+                            el.style.backgroundSize = 'cover';
+                            el.style.backgroundPosition = 'center';
+                            el.innerText = '';
+                        });
+                        showToast('Foto profil berhasil diperbarui!', 'success');
+                        localStorage.setItem('adminProfileImage', e.target.result);
+                    }
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        function initGeneralUI() {
+            // Sidebar Toggles
+            const mobileToggle = document.querySelector('.mobile-toggle');
+            const sidebar = document.querySelector('.admin-sidebar');
+            const sidebarToggle = document.querySelector('.sidebar-toggle');
+            mobileToggle?.addEventListener('click', () => sidebar?.classList.toggle('open'));
+            sidebarToggle?.addEventListener('click', () => sidebar?.classList.remove('open'));
+
+            // Reset Input logic
+            const resetInput = document.getElementById('reset-password');
+            const resetBtn = document.getElementById('btn-reset-data');
+            if (resetInput && resetBtn) {
+                resetInput.addEventListener('input', function () {
+                    resetBtn.disabled = this.value.length === 0;
+                });
+            }
+        }
+
+        function loadAdminProfileImage() {
+            const savedImage = localStorage.getItem('adminProfileImage');
+            if (savedImage) {
+                const avatar = document.getElementById('profile-avatar-display');
+                if (avatar) {
+                    avatar.style.backgroundImage = `url('${savedImage}')`;
+                    avatar.innerText = '';
+                }
+                document.querySelectorAll('.user-avatar').forEach(el => {
+                    el.style.backgroundImage = `url('${savedImage}')`;
+                    el.style.backgroundSize = 'cover';
+                    el.style.backgroundPosition = 'center';
+                    el.innerText = '';
+                });
+            }
+        }
+
+        function setupFormHandlers() {
+            const forms = [
+                { id: 'profile-form', save: saveAllSettings, msg: 'Profil Berhasil Disimpan!' },
+                { id: 'company-form', save: saveAllSettings, msg: 'Profil Perusahaan Berhasil Disimpan!' },
+                { id: 'website-form', save: saveWebsiteSettings, msg: 'Pengaturan Website Berhasil Disimpan!' }
+            ];
+
+            forms.forEach(f => {
+                const el = document.getElementById(f.id);
+                if (el) {
+                    el.addEventListener('submit', function (e) {
+                        e.preventDefault();
+                        const btn = this.querySelector('button[type="submit"]');
+                        const originalText = btn.innerHTML;
+                        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Menyimpan...';
+                        btn.disabled = true;
+
+                        setTimeout(() => {
+                            f.save();
+                            showToast(f.msg, 'success');
+                            btn.innerHTML = originalText;
+                            btn.disabled = false;
+                        }, 800);
+                    });
+                }
+            });
+        }
+
+        // ==================== SAVE/LOAD FUNCTIONS ====================
+        function saveAllSettings() {
+            const data = {};
+            const ids = [
+                'admin-name', 'admin-email', 'admin-phone',
+                'company-name', 'company-tagline', 'company-description', 'company-year',
+                'company-employees', 'company-founders', 'company-types', 'company-whatsapp',
+                'company-phone', 'company-email', 'company-address', 'company-hours-weekday',
+                'company-hours-saturday', 'company-hours-sunday', 'company-vision',
+                'company-mission', 'company-products'
+            ];
+            ids.forEach(id => {
+                const el = document.getElementById(id);
+                if (el) data[id] = el.value;
+            });
+            localStorage.setItem('profileSettings', JSON.stringify(data));
+            if (typeof saveToDatabase === 'function') saveToDatabase();
+        }
+
+        function loadAllSettings() {
+            const data = JSON.parse(localStorage.getItem('profileSettings'));
+            if (data) {
+                Object.keys(data).forEach(id => {
+                    if (typeof setVal === 'function') setVal(id, data[id]);
+                });
+            }
+        }
+
+        function saveWebsiteSettings() {
+            const data = {};
+            const ids = ['social-facebook', 'social-instagram', 'social-shopee', 'social-tiktok', 'social-whatsapp', 'social-website'];
+            ids.forEach(id => {
+                const el = document.getElementById(id);
+                if (el) data[id] = el.value;
+            });
+            localStorage.setItem('websiteSettings', JSON.stringify(data));
+            if (typeof saveToDatabase === 'function') saveToDatabase();
+        }
+
+        function loadWebsiteSettings() {
+            const data = JSON.parse(localStorage.getItem('websiteSettings'));
+            if (data) {
+                Object.keys(data).forEach(id => {
+                    if (typeof setVal === 'function') setVal(id, data[id]);
+                });
+            }
+        }
+
+        // ==================== USER MANAGEMENT ====================
+        let usersData = [];
+        let isEditingUser = false;
+
+        async function loadUsers() {
+            const loading = document.getElementById('users-loading');
+            const table = document.getElementById('users-table');
+            const tbody = document.getElementById('users-tbody');
+
+            if (!tbody) return;
+
+            try {
+                const response = await fetch('../api/users.php');
+                const result = await response.json();
+
+                if (result.success) {
+                    usersData = result.data;
+                    renderUsersTable();
+                    loading.style.display = 'none';
+                    table.style.display = 'table';
+                } else {
+                    showToast('Gagal memuat data user: ' + result.message, 'error');
+                    loading.innerHTML = '<p style="color: var(--danger);"><i class="fas fa-exclamation-circle"></i> Gagal memuat data</p>';
+                }
+            } catch (error) {
+                console.error('Load users error:', error);
+                showToast('Error koneksi server', 'error');
+                loading.innerHTML = '<p style="color: var(--danger);"><i class="fas fa-exclamation-circle"></i> Gagal memuat data</p>';
+            }
+        }
+
+        function renderUsersTable() {
+            const tbody = document.getElementById('users-tbody');
+            if (!tbody) return;
+
+            const roleColors = {
+                'super_admin': 'var(--primary-gradient)',
+                'admin': 'linear-gradient(135deg, #8b5cf6, #a78bfa)',
+                'operator': 'linear-gradient(135deg, #10b981, #34d399)'
+            };
+
+            tbody.innerHTML = usersData.map(user => {
+                // Safe name for onclick
+                const displayName = (user.nama_lengkap || user.username).replace(/'/g, "\\'");
+
+                return `
+                <tr data-user-id="${user.id}">
+                    <td>
+                        <div style="display: flex; align-items: center; gap: 0.75rem;">
+                            <div style="width: 36px; height: 36px; border-radius: 50%; background: ${roleColors[user.role] || roleColors.operator}; display: flex; align-items: center; justify-content: center; color: white; font-weight: 600; font-size: 0.85rem;">
+                                ${user.initials}
+                            </div>
+                            <div>
+                                <strong>${user.nama_lengkap || user.username}</strong>
+                                <br><small style="color: var(--gray-500);">@${user.username}</small>
+                            </div>
+                        </div>
+                    </td>
+                    <td>${user.email}</td>
+                    <td>
+                        <span class="status-badge ${user.role === 'super_admin' || user.role === 'admin' ? 'active' : 'low'}">
+                            ${user.role_display}
+                        </span>
+                    </td>
+                    <td>
+                        <span class="status-badge ${user.status === 'active' ? 'active' : 'warning'}">
+                            ${user.status === 'active' ? 'Aktif' : 'Tidak Aktif'}
+                        </span>
+                    </td>
+                    <td>
+                        <div class="actions">
+                            <button class="edit" onclick="editUser(${user.id})" title="Edit">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            ${user.role !== 'super_admin' ? `
+                                <button class="delete" onclick="confirmDeleteUser(${user.id}, '${displayName}')" title="Hapus">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            ` : ''}
+                        </div>
+                    </td>
+                </tr>
+            `}).join('');
+        }
+
+        function openUserModal() {
+            isEditingUser = false;
+            document.getElementById('user-modal-title').textContent = 'Tambah User Baru';
+            document.getElementById('user-form').reset();
+            document.getElementById('user-id').value = '';
+            document.getElementById('user-password').required = true;
+            document.getElementById('password-required').style.display = 'inline';
+            document.getElementById('password-hint').style.display = 'none';
+            document.getElementById('user-submit-btn').innerHTML = '<i class="fas fa-save"></i> Simpan';
+            document.getElementById('user-modal').classList.add('active');
+        }
+
+        function closeUserModal() {
+            document.getElementById('user-modal').classList.remove('active');
+        }
+
+        function editUser(userId) {
+            const user = usersData.find(u => u.id === userId);
+            if (!user) {
+                showToast('User tidak ditemukan', 'error');
+                return;
+            }
+
+            isEditingUser = true;
+            document.getElementById('user-modal-title').textContent = 'Edit User';
+            document.getElementById('user-id').value = user.id;
+            document.getElementById('user-nama').value = user.nama_lengkap || '';
+            document.getElementById('user-username').value = user.username || '';
+            document.getElementById('user-email').value = user.email || '';
+            document.getElementById('user-telepon').value = user.telepon || '';
+            document.getElementById('user-role').value = user.role || 'operator';
+            document.getElementById('user-status').value = user.status || 'active';
+            document.getElementById('user-password').value = '';
+            document.getElementById('user-password').required = false;
+            document.getElementById('password-required').style.display = 'none';
+            document.getElementById('password-hint').style.display = 'inline';
+            document.getElementById('user-submit-btn').innerHTML = '<i class="fas fa-save"></i> Update';
+            document.getElementById('user-modal').classList.add('active');
+        }
+
+        async function saveUser(e) {
+            e.preventDefault();
+
+            const submitBtn = document.getElementById('user-submit-btn');
+            const originalText = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Menyimpan...';
+            submitBtn.disabled = true;
+
+            const userId = document.getElementById('user-id').value;
+            const password = document.getElementById('user-password').value;
+
+            // Validate password for new users
+            if (!isEditingUser && password.length < 6) {
+                showToast('Password minimal 6 karakter', 'error');
+                submitBtn.innerHTML = originalText;
+                submitBtn.disabled = false;
+                return;
+            }
+
+            const data = {
+                username: document.getElementById('user-username').value.trim(),
+                email: document.getElementById('user-email').value.trim(),
+                nama_lengkap: document.getElementById('user-nama').value.trim(),
+                telepon: document.getElementById('user-telepon').value.trim(),
+                role: document.getElementById('user-role').value,
+                status: document.getElementById('user-status').value
+            };
+
+            if (password) {
+                data.password = password;
+            }
+
+            if (userId) {
+                data.id = parseInt(userId);
+            }
+
+            try {
+                const response = await fetch('../api/users.php', {
+                    method: isEditingUser ? 'PUT' : 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    showToast(result.message || 'User berhasil disimpan', 'success');
+                    closeUserModal();
+                    loadUsers();
+                } else {
+                    showToast(result.message || 'Gagal menyimpan user', 'error');
+                }
+            } catch (error) {
+                console.error('Save user error:', error);
+                showToast('Error koneksi server', 'error');
+            } finally {
+                submitBtn.innerHTML = originalText;
+                submitBtn.disabled = false;
+            }
+        }
+
+        function confirmDeleteUser(userId, userName) {
+            if (confirm(`Apakah Anda yakin ingin menghapus user "${userName}"?\n\nTindakan ini tidak dapat dibatalkan.`)) {
+                deleteUser(userId);
+            }
+        }
+
+        async function deleteUser(userId) {
+            try {
+                const response = await fetch('../api/users.php', {
+                    method: 'DELETE',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ id: userId })
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    showToast('User berhasil dihapus', 'success');
+                    loadUsers();
+                } else {
+                    showToast(result.message || 'Gagal menghapus user', 'error');
+                }
+            } catch (error) {
+                console.error('Delete user error:', error);
+                showToast('Error koneksi server', 'error');
+            }
+        }
+
+        function togglePasswordVisibility() {
+            const passwordInput = document.getElementById('user-password');
+            const toggleIcon = document.getElementById('password-toggle-icon');
+
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                toggleIcon.classList.remove('fa-eye');
+                toggleIcon.classList.add('fa-eye-slash');
+            } else {
+                passwordInput.type = 'password';
+                toggleIcon.classList.remove('fa-eye-slash');
+                toggleIcon.classList.add('fa-eye');
+            }
+        }
+
+        // Load users when users section is shown
+        const originalShowSettingsSection = showSettingsSection;
+        showSettingsSection = function (sectionId) {
+            originalShowSettingsSection(sectionId);
+            if (sectionId === 'users') {
+                loadUsers();
+            }
+        };
+
+        // Close modal on outside click
+        document.getElementById('user-modal')?.addEventListener('click', function (e) {
+            if (e.target === this) {
+                closeUserModal();
+            }
+        });
+    </script>
+</body>
+
+</html>

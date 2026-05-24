@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Hubungi SINAR JAYA KONVEKSI - Alamat, Telepon, Email, dan Form Kontak">
+    <title>Kontak - SINAR JAYA KONVEKSI</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/pages.css">
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <a href="index.html" class="logo">
+                <div class="logo-text">SINAR JAYA<span>KONVEKSI</span></div>
+            </a>
+            <nav class="nav-menu">
+                <a href="index.html">Beranda</a>
+                <a href="about.html">Tentang Kami</a>
+                <a href="products.html">Produk</a>
+                <a href="gallery.html">Galeri</a>
+                <a href="contact.html" class="active">Kontak</a>
+                <a href="admin/index.html" class="nav-admin-btn"><i class="fas fa-fingerprint"></i> <span>Staff
+                        Login</span></a>
+            </nav>
+            <button class="nav-toggle"><span></span><span></span><span></span></button>
+        </div>
+    </header>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <h1>Hubungi Kami</h1>
+        <div class="breadcrumb">
+            <a href="index.html">Beranda</a>
+            <span>/</span>
+            <span>Kontak</span>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="section contact-section">
+        <div class="container">
+            <div class="contact-grid">
+                <!-- Contact Info -->
+                <div class="contact-info fade-in">
+                    <h3>Informasi Kontak</h3>
+                    <p>Silakan hubungi kami melalui berbagai channel berikut atau kunjungi langsung workshop kami.</p>
+
+                    <div class="contact-info-list">
+                        <div class="contact-info-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <div>
+                                <strong>Alamat</strong>
+                                <span id="company-address-text">Desa Padurenan, Kecamatan Gebog<br>Kabupaten Kudus, Jawa
+                                    Tengah</span>
+                            </div>
+                        </div>
+
+                        <div class="contact-info-item">
+                            <i class="fab fa-whatsapp"></i>
+                            <div>
+                                <strong>WhatsApp</strong>
+                                <span class="company-phone-label">+62 856 4735 2998</span>
+                            </div>
+                        </div>
+
+                        <div class="contact-info-item">
+                            <i class="fas fa-envelope"></i>
+                            <div>
+                                <strong>Email</strong>
+                                <span class="company-email-label">info@sinarjaya-konveksi.com</span>
+                            </div>
+                        </div>
+
+                        <div class="contact-info-item">
+                            <i class="fas fa-clock"></i>
+                            <div>
+                                <strong>Jam Operasional</strong>
+                                <span>Senin - Sabtu: 08:00 - 17:00<br>Minggu: Tutup</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Social Links -->
+                    <div style="margin-top: 2rem;">
+                        <h5 style="margin-bottom: 1rem;">Follow Kami</h5>
+                        <div class="footer-social">
+                            <a href="https://www.facebook.com/share/1BrUVgcHFc/?mibextid=wwXIfr" target="_blank"
+                                title="Facebook"><i class="fab fa-facebook-f"></i></a>
+                            <a href="https://www.instagram.com/sinar_jaya_konveksi_kudus?igsh=MXJucmVoNmF2eWx2cw="
+                                target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+                            <a href="https://s.shopee.co.id/10xHFKtWol?share_channel_code=1" target="_blank"
+                                title="Shopee"><i class="fas fa-shopping-bag"></i></a>
+                        </div>
+                    </div>
+
+                    <!-- Map -->
+                    <div class="contact-map">
+                        <iframe
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d31684.877870853857!2d110.82!3d-6.76!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e70c3a7b3c82e33%3A0x4027a76e352a850!2sGebog%2C%20Kudus%20Regency%2C%20Central%20Java!5e0!3m2!1sen!2sid!4v1234567890"
+                            allowfullscreen="" loading="lazy"></iframe>
+                    </div>
+                </div>
+
+                <!-- Contact Form -->
+                <div class="contact-form-wrapper fade-in">
+                    <h3>Kirim Pesan via WhatsApp</h3>
+                    <p style="color: var(--gray-500); margin-bottom: 1.5rem;">Isi form di bawah ini, pesan akan langsung
+                        dikirim ke WhatsApp kami.</p>
+
+                    <form id="contact-form">
+                        <div class="form-group">
+                            <label for="name">Nama Lengkap *</label>
+                            <input type="text" id="name" class="form-control" placeholder="Masukkan nama lengkap"
+                                required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email">Email *</label>
+                            <input type="email" id="email" class="form-control" placeholder="Masukkan alamat email"
+                                required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="phone">No. Telepon</label>
+                            <input type="tel" id="phone" class="form-control" placeholder="Masukkan nomor telepon">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="company">Nama Perusahaan/Instansi</label>
+                            <input type="text" id="company" class="form-control"
+                                placeholder="Masukkan nama perusahaan (opsional)">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="subject">Subjek *</label>
+                            <select id="subject" class="form-control" required>
+                                <option value="">Pilih subjek</option>
+                                <option value="inquiry">Pertanyaan Umum</option>
+                                <option value="quotation">Permintaan Harga</option>
+                                <option value="order">Pemesanan</option>
+                                <option value="custom">Pesanan Custom</option>
+                                <option value="partnership">Kerjasama Bisnis</option>
+                                <option value="other">Lainnya</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="message">Pesan *</label>
+                            <textarea id="message" class="form-control" rows="5"
+                                placeholder="Tuliskan pesan Anda di sini..." required></textarea>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary btn-lg"
+                            style="width: 100%; background: linear-gradient(135deg, #25d366, #128c7e);">
+                            <i class="fab fa-whatsapp"></i> Kirim ke WhatsApp
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quick Contact -->
+    <section class="section stats">
+        <div class="container">
+            <div class="stats-grid" style="grid-template-columns: repeat(2, 1fr);">
+                <a href="https://wa.me/6285647352998" target="_blank" class="stat-item fade-in link-whatsapp"
+                    style="cursor: pointer;">
+                    <div class="stat-icon"><i class="fab fa-whatsapp"></i></div>
+                    <div class="stat-value" style="font-size: 1.5rem;">WhatsApp</div>
+                    <div class="stat-label company-phone-label">+62 856 4735 2998</div>
+                </a>
+                <a href="mailto:info@sinarjaya-konveksi.com" class="stat-item fade-in link-email"
+                    style="cursor: pointer;">
+                    <div class="stat-icon"><i class="fas fa-envelope"></i></div>
+                    <div class="stat-value" style="font-size: 1.5rem;">Email</div>
+                    <div class="stat-label company-email-label">info@sinarjaya-konveksi.com</div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <div class="logo-text">SINAR JAYA<span>KONVEKSI</span></div>
+                    <p id="footer-company-desc">Mitra terpercaya untuk kebutuhan konveksi berkualitas tinggi sejak 2017.
+                    </p>
+                    <div class="footer-social">
+                        <a href="https://www.facebook.com/share/1BrUVgcHFc/?mibextid=wwXIfr" id="link-facebook"
+                            target="_blank"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://www.instagram.com/sinar_jaya_konveksi_kudus?igsh=MXJucmVoNmF2eWx2cw="
+                            id="link-instagram" target="_blank"><i class="fab fa-instagram"></i></a>
+                        <a href="https://s.shopee.co.id/10xHFKtWol?share_channel_code=1" id="link-shopee"
+                            target="_blank"><i class="fas fa-shopping-bag"></i></a>
+                        <a href="#" id="link-tiktok" style="display: none;" target="_blank"><i
+                                class="fab fa-tiktok"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h5>Menu</h5>
+                    <div class="footer-links">
+                        <a href="index.html">Beranda</a>
+                        <a href="about.html">Tentang Kami</a>
+                        <a href="products.html">Produk</a>
+                        <a href="gallery.html">Galeri</a>
+                        <a href="contact.html">Kontak</a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h5>Produk</h5>
+                    <div class="footer-links">
+                        <a href="products.html?cat=kemeja">Kemeja</a>
+                        <a href="products.html?cat=polo">Polo Shirt</a>
+                        <a href="products.html?cat=jaket">Jaket</a>
+                        <a href="products.html?cat=seragam">Seragam</a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h5>Kontak</h5>
+                    <div class="footer-contact-item"><i class="fas fa-map-marker-alt"></i><span
+                            id="company-address-text">Desa Padurenan, Kec.
+                            Gebog, Kab. Kudus</span></div>
+                    <div class="footer-contact-item"><i class="fab fa-whatsapp"></i><span
+                            class="company-phone-label">+62 856 4735 2998</span></div>
+                    <div class="footer-contact-item"><i class="fas fa-envelope"></i><span
+                            class="company-email-label">info@sinarjaya-konveksi.com</span></div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 SINAR JAYA KONVEKSI. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/data.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/settings-sync.js"></script>
+    <script>
+        document.getElementById('contact-form').addEventListener('submit', async function (e) {
+            e.preventDefault();
+
+            if (validateForm(this)) {
+                const submitBtn = this.querySelector('button[type="submit"]');
+                const originalText = submitBtn.innerHTML;
+
+                // Disable button and show loading
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Mengirim...';
+
+                // Ambil nilai dari form
+                const name = document.getElementById('name').value;
+                const email = document.getElementById('email').value;
+                const phone = document.getElementById('phone').value || '-';
+                const company = document.getElementById('company').value || '-';
+                const subjectSelect = document.getElementById('subject');
+                const subjectValue = subjectSelect.value;
+                const subjectText = subjectSelect.options[subjectSelect.selectedIndex].text;
+                const message = document.getElementById('message').value;
+
+                // 1. Simpan ke Database via API
+                try {
+                    const response = await fetch('api/contact.php', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            nama: name,
+                            email: email,
+                            telepon: phone,
+                            perusahaan: company,
+                            subjek: subjectValue,
+                            pesan: message
+                        })
+                    });
+
+                    const result = await response.json();
+
+                    if (result.success) {
+                        console.log('Message saved to database:', result);
+                        showToast('Pesan berhasil disimpan!', 'success');
+                    } else {
+                        console.warn('Failed to save to database:', result.message);
+                    }
+                } catch (error) {
+                    console.warn('Could not save to database (server may not be running):', error);
+                    // Continue anyway - WhatsApp will still work
+                }
+
+                // 2. Format pesan untuk WhatsApp
+                const waMessage = `*PESAN DARI WEBSITE SINAR JAYA KONVEKSI*
+
+*Nama:* ${name}
+*Email:* ${email}
+*No. Telepon:* ${phone}
+*Perusahaan/Instansi:* ${company}
+*Subjek:* ${subjectText}
+
+*Pesan:*
+${message}
+
+---
+_Pesan ini dikirim melalui form kontak website_`;
+
+                // Encode pesan untuk URL
+                const encodedMessage = encodeURIComponent(waMessage);
+
+                // Nomor WhatsApp Sinar Jaya
+                const waNumber = '6285647352998';
+
+                // Buka WhatsApp dengan pesan
+                const waUrl = `https://wa.me/${waNumber}?text=${encodedMessage}`;
+
+                // Re-enable button
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = originalText;
+
+                // Buka di tab baru
+                window.open(waUrl, '_blank');
+
+                // Reset form dan tampilkan notifikasi
+                showToast('Anda akan dialihkan ke WhatsApp...', 'success');
+                this.reset();
+            }
+        });
+    </script>
+</body>
+
+</html>

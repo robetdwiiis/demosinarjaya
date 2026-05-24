@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manajemen Produk - SINAR JAYA KONVEKSI</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/admin.css">
+    <script src="../js/admin/auth.js"></script>
+</head>
+
+<body>
+    <div class="admin-wrapper">
+        <!-- Sidebar -->
+        <aside class="admin-sidebar">
+            <div class="sidebar-header">
+                <div class="logo-text">SINAR JAYA<span>KONVEKSI</span></div>
+                <button class="sidebar-toggle"><i class="fas fa-times"></i></button>
+            </div>
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <span class="nav-section-title">Menu Utama</span>
+                    <a href="index.html" class="nav-item"><i class="fas fa-home"></i><span>Dashboard</span></a>
+                    <a href="products.html" class="nav-item active"><i class="fas fa-box"></i><span>Manajemen
+                            Produk</span></a>
+                    <a href="gallery.html" class="nav-item"><i class="fas fa-images"></i><span>Galeri Foto</span></a>
+                    <a href="prediction.html" class="nav-item"><i class="fas fa-chart-line"></i><span>Prediksi
+                            Stok</span></a>
+                    <a href="reports.html" class="nav-item"><i class="fas fa-file-alt"></i><span>Laporan</span></a>
+                    <a href="messages.html" class="nav-item"><i class="fas fa-envelope"></i><span>Pesan Masuk</span></a>
+                    <a href="testimonials.html" class="nav-item"><i class="fas fa-star"></i><span>Testimonial</span></a>
+                </div>
+                <div class="nav-section">
+                    <span class="nav-section-title">Pengaturan</span>
+                    <a href="settings.html" class="nav-item"><i class="fas fa-cog"></i><span>Pengaturan</span></a>
+                    <a href="#" onclick="logout(); return false;" class="nav-item" style="color: var(--danger);"><i
+                            class="fas fa-sign-out-alt"></i><span>Keluar</span></a>
+                </div>
+            </nav>
+            <div class="sidebar-footer">
+                <div class="user-info">
+                    <div class="user-avatar">AD</div>
+                    <div class="user-details"><strong>Admin</strong><span>Administrator</span></div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="admin-main">
+            <header class="admin-header">
+                <div class="header-left">
+                    <button class="mobile-toggle"><i class="fas fa-bars"></i></button>
+                    <div class="page-title">
+                        <h4>Manajemen Produk</h4>
+                        <span>Kelola katalog produk Anda</span>
+                    </div>
+                </div>
+                <div class="header-right">
+                    <div class="notification-wrapper">
+                        <button class="header-icon notification-trigger" id="notification-btn">
+                            <i class="fas fa-bell"></i>
+                            <span class="badge" id="notification-badge"></span>
+                        </button>
+                        <div class="notification-dropdown" id="notification-dropdown">
+                            <div class="notification-header">
+                                <h6><i class="fas fa-bell"></i> Notifikasi</h6>
+                                <button class="mark-all-read" onclick="markAllRead()">Tandai dibaca</button>
+                            </div>
+                            <div class="notification-list" id="notification-list">
+                                <div class="notification-loading">
+                                    <i class="fas fa-spinner fa-spin"></i> Memuat...
+                                </div>
+                            </div>
+                            <div class="notification-footer">
+                                <a href="messages.html">Lihat Semua Pesan <i class="fas fa-arrow-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="../index.html" class="btn btn-sm btn-secondary"><i class="fas fa-external-link-alt"></i>
+                        Lihat Website</a>
+                </div>
+            </header>
+
+            <div class="admin-content">
+                <!-- Toolbar -->
+                <div class="toolbar">
+                    <div style="display: flex; gap: 1rem; align-items: center;">
+                        <div class="search-box">
+                            <i class="fas fa-search"></i>
+                            <input type="text" id="search-products" placeholder="Cari produk...">
+                        </div>
+                        <select id="filter-category" class="form-input" style="width: auto; padding: 0.75rem 1rem;">
+                            <option value="all">Semua Kategori</option>
+                            <option value="kemeja">Kemeja</option>
+                            <option value="polo">Polo Shirt</option>
+                            <option value="jaket">Jaket</option>
+                            <option value="seragam">Seragam</option>
+                            <option value="kaos">Kaos</option>
+                            <option value="celana">Celana</option>
+                        </select>
+                    </div>
+                    <div class="toolbar-actions">
+                        <button class="btn btn-primary" onclick="openAddProduct()">
+                            <i class="fas fa-plus"></i> Tambah Produk
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Products Table -->
+                <div class="card">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Produk</th>
+                                        <th>Kategori</th>
+                                        <th>Harga</th>
+                                        <th>Stok</th>
+                                        <th>Unggulan</th>
+                                        <th>Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="products-table">
+                                    <!-- Loaded by JS -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Product Modal -->
+    <div class="modal" id="product-modal">
+        <div class="modal-content" style="max-width: 700px;">
+            <div class="modal-header">
+                <h4 id="modal-title">Tambah Produk Baru</h4>
+                <button class="modal-close" onclick="closeModal('product-modal')"><i class="fas fa-times"></i></button>
+            </div>
+            <form id="product-form">
+                <div class="modal-body">
+                    <div class="form-grid-premium">
+                        <!-- Left Column: Basic Info -->
+                        <div class="form-column">
+                            <div class="form-group">
+                                <label class="form-label">Nama Produk <span class="required">*</span></label>
+                                <input type="text" id="product-name" class="form-input" required
+                                    placeholder="Contoh: Kemeja Formal Putih">
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">Kategori <span class="required">*</span></label>
+                                <select id="product-category" class="form-input form-select" required>
+                                    <option value="">Pilih Kategori</option>
+                                    <option value="kemeja">Kemeja</option>
+                                    <option value="polo">Polo Shirt</option>
+                                    <option value="jaket">Jaket</option>
+                                    <option value="seragam">Seragam</option>
+                                    <option value="kaos">Kaos</option>
+                                    <option value="celana">Celana</option>
+                                </select>
+                            </div>
+
+                            <div class="form-row-compact">
+                                <div class="form-group">
+                                    <label class="form-label">Harga (Rp) <span class="required">*</span></label>
+                                    <div class="input-with-icon">
+                                        <span class="input-icon">Rp</span>
+                                        <input type="number" id="product-price" class="form-input" required
+                                            placeholder="0" min="0">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Stok <span class="required">*</span></label>
+                                    <div class="input-with-icon">
+                                        <input type="number" id="product-stock" class="form-input" required
+                                            placeholder="0" min="0">
+                                        <span class="input-suffix">Pcs</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Right Column: Media -->
+                        <div class="form-column">
+                            <div class="form-group">
+                                <label class="form-label">Gambar Produk</label>
+                                <div class="image-upload-container">
+                                    <div class="file-preview-main" id="image-preview">
+                                        <!-- Placeholder if empty -->
+                                        <div class="no-image-placeholder">
+                                            <i class="fas fa-image"></i>
+                                            <span>Preview Gambar</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="upload-options">
+                                        <label class="btn-upload-box" for="image-input">
+                                            <i class="fas fa-cloud-upload-alt"></i>
+                                            <span>Upload Foto</span>
+                                            <input type="file" id="image-input" accept="image/*" style="display: none;">
+                                        </label>
+
+                                        <div class="url-input-box">
+                                            <input type="url" id="product-image-url" class="form-input-sm"
+                                                placeholder="Atau tempel URL gambar...">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="checkbox-wrapper-premium">
+                                    <input type="checkbox" id="product-featured">
+                                    <span class="checkmark"></span>
+                                    <span class="label-text">Jadikan Produk Unggulan</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Full Width Column: Description -->
+                        <div class="form-group full-width">
+                            <label class="form-label">Deskripsi Lengkap</label>
+                            <textarea id="product-description" class="form-input" rows="4"
+                                placeholder="Jelaskan detail bahan, ukuran, dan keunggulan produk..."></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="closeModal('product-modal')">
+                        <i class="fas fa-times"></i> Batal
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save"></i> Simpan Produk
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="../js/data.js?v=7"></script>
+    <script src="../js/main.js?v=7"></script>
+    <script src="../js/admin/products.js?v=7"></script>
+    <script src="../js/admin/notifications.js?v=3"></script>
+    <script>
+        // Initialize sidebar toggle
+        document.querySelector('.mobile-toggle')?.addEventListener('click', () => {
+            document.querySelector('.admin-sidebar')?.classList.toggle('open');
+        });
+        document.querySelector('.sidebar-toggle')?.addEventListener('click', () => {
+            document.querySelector('.admin-sidebar')?.classList.remove('open');
+        });
+    </script>
+</body>
+
+</html>

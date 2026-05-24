@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Presentasi PKL - Sinar Jaya Konveksi</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --navy: #0f1e3c;
+            --navy-light: #1a2f5a;
+            --gold: #c9a84c;
+            --gold-light: #e8d5a3;
+            --white: #ffffff;
+            --gray: #94a3b8;
+            --light: #f8fafc;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0a0f1e;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        /* ===== SLIDE WRAPPER ===== */
+        .slide-wrapper {
+            width: 100%;
+            max-width: 960px;
+            position: relative;
+        }
+
+        .slide {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            background: var(--navy);
+            border-radius: 16px;
+            overflow: hidden;
+            position: relative;
+            display: none;
+            box-shadow: 0 40px 80px rgba(0,0,0,0.5);
+        }
+
+        .slide.active { display: flex; }
+
+        /* ===== SLIDE DECORATIONS ===== */
+        .slide-deco-line {
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--gold), var(--gold-light), var(--gold));
+        }
+
+        .slide-deco-circle {
+            position: absolute;
+            border-radius: 50%;
+            border: 1px solid rgba(201,168,76,0.15);
+        }
+
+        /* ===== SLIDE CONTENT ===== */
+        .slide-content {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 52px 64px;
+        }
+
+        /* ===== SLIDE NUMBER ===== */
+        .slide-num {
+            position: absolute;
+            bottom: 24px;
+            right: 32px;
+            font-size: 0.7rem;
+            color: rgba(255,255,255,0.25);
+            font-weight: 500;
+            letter-spacing: 0.1em;
+        }
+
+        /* ===== TYPOGRAPHY ===== */
+        .slide-eyebrow {
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .slide-eyebrow::before {
+            content: '';
+            width: 28px;
+            height: 2px;
+            background: var(--gold);
+            display: block;
+        }
+
+        .slide-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+            font-weight: 700;
+            color: var(--white);
+            line-height: 1.2;
+            margin-bottom: 10px;
+        }
+
+        .slide-subtitle {
+            font-size: 0.95rem;
+            color: var(--gray);
+            font-weight: 400;
+            line-height: 1.6;
+        }
+
+        .slide-divider {
+            width: 48px;
+            height: 2px;
+            background: var(--gold);
+            margin: 22px 0;
+        }
+
+        /* ===== SLIDE 1 COVER ===== */
+        .slide-cover {
+            background: linear-gradient(135deg, #0c1a36 0%, #0f2040 60%, #0a1428 100%);
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+        .cover-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            border: 1px solid rgba(201,168,76,0.4);
+            color: var(--gold);
+            font-size: 0.68rem;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            padding: 6px 16px;
+            border-radius: 100px;
+            margin-bottom: 28px;
+        }
+
+        .cover-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.5rem, 3vw, 2.2rem);
+            font-weight: 700;
+            color: white;
+            line-height: 1.25;
+            max-width: 680px;
+            margin-bottom: 24px;
+        }
+
+        .cover-title span { color: var(--gold); }
+
+        .cover-meta {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .cover-meta p {
+            font-size: 0.82rem;
+            color: var(--gray);
+            font-weight: 400;
+        }
+
+        .cover-meta strong {
+            color: rgba(255,255,255,0.85);
+            font-weight: 600;
+        }
+
+        /* ===== TWO COLUMN LAYOUT ===== */
+        .two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 32px;
+            width: 100%;
+        }
+
+        .col-card {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 12px;
+            padding: 24px;
+        }
+
+        .col-card-title {
+            font-size: 0.72rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: var(--gold);
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .col-card-title::before {
+            content: '';
+            width: 16px;
+            height: 2px;
+            background: var(--gold);
+        }
+
+        /* ===== LIST ITEMS ===== */
+        .slide-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .slide-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            font-size: 0.82rem;
+            color: rgba(255,255,255,0.8);
+            line-height: 1.5;
+        }
+
+        .slide-list li::before {
+            content: '◆';
+            color: var(--gold);
+            font-size: 0.5rem;
+            margin-top: 5px;
+            flex-shrink: 0;
+        }
+
+        /* ===== STEPS ===== */
+        .steps-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 12px;
+            width: 100%;
+            margin-top: 8px;
+        }
+
+        .step-card {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(201,168,76,0.2);
+            border-radius: 10px;
+            padding: 16px 12px;
+            text-align: center;
+        }
+
+        .step-num {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--gold);
+            margin-bottom: 6px;
+        }
+
+        .step-label {
+            font-size: 0.68rem;
+            color: rgba(255,255,255,0.7);
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            line-height: 1.4;
+        }
+
+        .step-sub {
+            font-size: 0.62rem;
+            color: var(--gray);
+            margin-top: 4px;
+            line-height: 1.3;
+        }
+
+        /* ===== TABLE ===== */
+        .slide-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.78rem;
+        }
+
+        .slide-table th {
+            background: rgba(201,168,76,0.12);
+            color: var(--gold);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            font-size: 0.65rem;
+            padding: 10px 14px;
+            text-align: left;
+            border-bottom: 1px solid rgba(201,168,76,0.25);
+        }
+
+        .slide-table td {
+            padding: 9px 14px;
+            color: rgba(255,255,255,0.8);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            vertical-align: middle;
+        }
+
+        .slide-table tr:last-child td { border-bottom: none; }
+
+        .badge-valid {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            background: rgba(34,197,94,0.12);
+            color: #86efac;
+            font-size: 0.65rem;
+            font-weight: 700;
+            padding: 3px 10px;
+            border-radius: 100px;
+            border: 1px solid rgba(34,197,94,0.2);
+        }
+
+        /* ===== HIGHLIGHT BOX ===== */
+        .highlight-box {
+            background: rgba(201,168,76,0.08);
+            border: 1px solid rgba(201,168,76,0.25);
+            border-left: 3px solid var(--gold);
+            border-radius: 8px;
+            padding: 14px 18px;
+            font-size: 0.82rem;
+            color: rgba(255,255,255,0.8);
+            margin-top: 16px;
+        }
+
+        /* ===== FEATURES GRID ===== */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 14px;
+            width: 100%;
+        }
+
+        .feature-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.07);
+            border-radius: 10px;
+            padding: 18px 16px;
+        }
+
+        .feature-icon {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+        }
+
+        .feature-title {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--gold-light);
+            margin-bottom: 6px;
+        }
+
+        .feature-desc {
+            font-size: 0.68rem;
+            color: var(--gray);
+            line-height: 1.5;
+        }
+
+        /* ===== SLIDE 10 THANK YOU ===== */
+        .slide-thankyou {
+            background: linear-gradient(135deg, #0c1a36 0%, #0f2040 100%);
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .thankyou-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 700;
+            color: white;
+            margin-bottom: 8px;
+        }
+
+        .thankyou-title span { color: var(--gold); }
+
+        .thankyou-sub {
+            font-size: 0.85rem;
+            color: var(--gray);
+            margin-bottom: 32px;
+        }
+
+        .thankyou-divider {
+            width: 60px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+            margin: 20px auto;
+        }
+
+        .thankyou-info {
+            font-size: 0.82rem;
+            color: rgba(255,255,255,0.6);
+            line-height: 1.8;
+        }
+
+        .thankyou-info strong {
+            color: rgba(255,255,255,0.9);
+        }
+
+        /* ===== CONTROLS ===== */
+        .controls {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-top: 24px;
+        }
+
+        .ctrl-btn {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.15);
+            color: white;
+            font-size: 1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .ctrl-btn:hover {
+            background: rgba(201,168,76,0.2);
+            border-color: rgba(201,168,76,0.4);
+        }
+
+        .ctrl-btn:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        .slide-indicator {
+            font-size: 0.82rem;
+            color: rgba(255,255,255,0.5);
+            font-weight: 500;
+            min-width: 60px;
+            text-align: center;
+        }
+
+        .slide-dots {
+            display: flex;
+            gap: 6px;
+        }
+
+        .dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.2);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .dot.active {
+            background: var(--gold);
+            width: 20px;
+            border-radius: 3px;
+        }
+
+        /* ===== PRINT ===== */
+        @media print {
+            body { background: white; padding: 0; }
+            .controls { display: none; }
+            .slide { display: flex !important; aspect-ratio: 16/9; page-break-after: always; border-radius: 0; box-shadow: none; }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="slide-wrapper">
+
+        <!-- SLIDE 1: COVER -->
+        <div class="slide slide-cover active" id="slide-1">
+            <div class="slide-deco-line"></div>
+            <div class="slide-deco-circle" style="width:400px;height:400px;right:-120px;top:-150px;"></div>
+            <div class="slide-deco-circle" style="width:200px;height:200px;right:60px;top:30px;"></div>
+            <div class="slide-content">
+                <div class="cover-badge">📋 Laporan PKL · 2025</div>
+                <div class="cover-title">
+                    Perancangan Website <span>Company Profile</span><br>
+                    & Sistem Prediksi Stok Barang<br>
+                    pada SINAR JAYA KONVEKSI
+                </div>
+                <div style="width:48px;height:2px;background:var(--gold);margin:20px 0;"></div>
+                <div class="cover-meta">
+                    <p><strong>[Nama Lengkap]</strong></p>
+                    <p>NIM / NIS: [NIM Kamu] &nbsp;|&nbsp; [Nama Sekolah/Kampus]</p>
+                    <p>Program Studi: [Nama Jurusan] &nbsp;|&nbsp; Tahun 2025</p>
+                </div>
+            </div>
+            <div class="slide-num">01 / 10</div>
+        </div>
+
+        <!-- SLIDE 2: LATAR BELAKANG -->
+        <div class="slide" id="slide-2">
+            <div class="slide-deco-line"></div>
+            <div class="slide-content">
+                <div class="slide-eyebrow">Pendahuluan</div>
+                <div class="slide-title">Latar Belakang</div>
+                <div class="slide-divider"></div>
+                <div class="two-col">
+                    <div class="col-card">
+                        <div class="col-card-title">Profil Perusahaan</div>
+                        <ul class="slide-list">
+                            <li>Usaha konveksi berdiri sejak <strong style="color:var(--gold-light)">tahun 2017</strong> di Kudus, Jawa Tengah</li>
+                            <li>Memproduksi kemeja, kaos, jaket, seragam, polo shirt, dan celana</li>
+                            <li>Melayani pelanggan perorangan & institusi</li>
+                        </ul>
+                    </div>
+                    <div class="col-card">
+                        <div class="col-card-title">Permasalahan</div>
+                        <ul class="slide-list">
+                            <li>Belum memiliki <strong style="color:var(--gold-light)">website resmi</strong> sebagai media promosi digital</li>
+                            <li>Pemasaran masih bergantung pada media sosial & mulut ke mulut</li>
+                            <li>Pengelolaan stok barang masih <strong style="color:var(--gold-light)">dilakukan secara manual</strong></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-num">02 / 10</div>
+        </div>
+
+        <!-- SLIDE 3: RUMUSAN MASALAH -->
+        <div class="slide" id="slide-3">
+            <div class="slide-deco-line"></div>
+            <div class="slide-content">
+                <div class="slide-eyebrow">BAB I</div>
+                <div class="slide-title">Rumusan & Batasan Masalah</div>
+                <div class="slide-divider"></div>
+                <div class="two-col">
+                    <div class="col-card">
+                        <div class="col-card-title">Rumusan Masalah</div>
+                        <ul class="slide-list">
+                            <li>Bagaimana merancang website <em>company profile</em> yang informatif dan responsif?</li>
+                            <li>Bagaimana mengimplementasikan sistem prediksi stok barang tahunan?</li>
+                            <li>Bagaimana membangun panel admin untuk mengelola konten website?</li>
+                        </ul>
+                    </div>
+                    <div class="col-card">
+                        <div class="col-card-title">Batasan Masalah</div>
+                        <ul class="slide-list">
+                            <li>Website berbasis <em>company profile</em>, bukan e-commerce transaksi</li>
+                            <li>Prediksi stok menggunakan: Moving Average, Linear Regression, Trend Analysis</li>
+                            <li>Teknologi: <strong style="color:var(--gold-light)">PHP, MySQL, HTML, CSS, JavaScript</strong></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-num">03 / 10</div>
+        </div>
+
+        <!-- SLIDE 4: TUJUAN & MANFAAT -->
+        <div class="slide" id="slide-4">
+            <div class="slide-deco-line"></div>
+            <div class="slide-content">
+                <div class="slide-eyebrow">BAB I</div>
+                <div class="slide-title">Tujuan & Manfaat</div>
+                <div class="slide-divider"></div>
+                <div class="two-col">
+                    <div class="col-card">
+                        <div class="col-card-title">Tujuan</div>
+                        <ul class="slide-list">
+                            <li>Membangun website <em>company profile</em> yang modern dan responsif</li>
+                            <li>Mengimplementasikan sistem prediksi stok menggunakan algoritma statistik</li>
+                            <li>Menyediakan panel admin untuk pengelolaan konten secara mandiri</li>
+                        </ul>
+                    </div>
+                    <div class="col-card">
+                        <div class="col-card-title">Manfaat</div>
+                        <ul class="slide-list">
+                            <li><strong style="color:var(--gold-light)">Perusahaan</strong> — Promosi lebih luas & estimasi produksi lebih akurat</li>
+                            <li><strong style="color:var(--gold-light)">Pelanggan</strong> — Mudah mengakses katalog & menghubungi via WhatsApp</li>
+                            <li><strong style="color:var(--gold-light)">Penulis</strong> — Pengalaman langsung dalam pengembangan sistem informasi</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-num">04 / 10</div>
+        </div>
+
+        <!-- SLIDE 5: METODE WATERFALL -->
+        <div class="slide" id="slide-5">
+            <div class="slide-deco-line"></div>
+            <div class="slide-content">
+                <div class="slide-eyebrow">BAB III · Metode Penelitian</div>
+                <div class="slide-title">Metode Pengembangan Sistem</div>
+                <div class="slide-divider"></div>
+                <div class="steps-grid">
+                    <div class="step-card">
+                        <div class="step-num">01</div>
+                        <div class="step-label">Communication</div>
+                        <div class="step-sub">Wawancara & analisis kebutuhan</div>
+                    </div>
+                    <div class="step-card">
+                        <div class="step-num">02</div>
+                        <div class="step-label">Planning</div>
+                        <div class="step-sub">Penjadwalan 5 minggu PKL</div>
+                    </div>
+                    <div class="step-card">
+                        <div class="step-num">03</div>
+                        <div class="step-label">Modeling</div>
+                        <div class="step-sub">Desain UI, DFD, ERD</div>
+                    </div>
+                    <div class="step-card">
+                        <div class="step-num">04</div>
+                        <div class="step-label">Construction</div>
+                        <div class="step-sub">Pemrograman PHP & MySQL</div>
+                    </div>
+                    <div class="step-card">
+                        <div class="step-num">05</div>
+                        <div class="step-label">Deployment</div>
+                        <div class="step-sub">Pengujian & penyerahan</div>
+                    </div>
+                </div>
+                <div class="highlight-box">
+                    Model <strong style="color:var(--gold-light)">Waterfall</strong> dipilih karena bersifat sistematis dan berurutan, sesuai dengan kebutuhan proyek yang memiliki ruang lingkup jelas sejak awal <em>(Pressman, 2015)</em>.
+                </div>
+            </div>
+            <div class="slide-num">05 / 10</div>
+        </div>
+
+        <!-- SLIDE 6: FITUR PUBLIK -->
+        <div class="slide" id="slide-6">
+            <div class="slide-deco-line"></div>
+            <div class="slide-content">
+                <div class="slide-eyebrow">BAB IV · Implementasi</div>
+                <div class="slide-title">Fitur Halaman Publik</div>
+                <div class="slide-divider"></div>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">🏠</div>
+                        <div class="feature-title">Beranda</div>
+                        <div class="feature-desc">Hero section, statistik perusahaan & produk unggulan</div>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">ℹ️</div>
+                        <div class="feature-title">Tentang Kami</div>
+                        <div class="feature-desc">Sejarah, visi misi & profil perusahaan</div>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">👕</div>
+                        <div class="feature-title">Katalog Produk</div>
+                        <div class="feature-desc">Filter kategori real-time (Kemeja, Kaos, Jaket, dll)</div>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🖼️</div>
+                        <div class="feature-title">Galeri</div>
+                        <div class="feature-desc">Foto produksi dengan lightbox interaktif</div>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">📞</div>
+                        <div class="feature-title">Kontak</div>
+                        <div class="feature-desc">Form pesan terintegrasi WhatsApp & Google Maps</div>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">⭐</div>
+                        <div class="feature-title">Testimonial</div>
+                        <div class="feature-desc">Ulasan kepuasan pelanggan sebelumnya</div>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-num">06 / 10</div>
+        </div>
+
+        <!-- SLIDE 7: PANEL ADMIN -->
+        <div class="slide" id="slide-7">
+            <div class="slide-deco-line"></div>
+            <div class="slide-content">
+                <div class="slide-eyebrow">BAB IV · Implementasi</div>
+                <div class="slide-title">Fitur Panel Administrasi</div>
+                <div class="slide-divider"></div>
+                <div class="two-col">
+                    <div class="col-card">
+                        <div class="col-card-title">Manajemen Konten</div>
+                        <ul class="slide-list">
+                            <li>Login aman dengan enkripsi <em>password</em> (bcrypt)</li>
+                            <li>Dashboard statistik sistem</li>
+                            <li>CRUD Produk, Kategori & Galeri</li>
+                            <li>Kelola pesan masuk pelanggan</li>
+                            <li>Update pengaturan website</li>
+                        </ul>
+                    </div>
+                    <div class="col-card">
+                        <div class="col-card-title">🔮 Prediksi Stok (Fitur Utama)</div>
+                        <ul class="slide-list">
+                            <li><strong style="color:var(--gold-light)">Moving Average</strong> — Rata-rata bergerak</li>
+                            <li><strong style="color:var(--gold-light)">Linear Regression</strong> — Regresi linier</li>
+                            <li><strong style="color:var(--gold-light)">Trend Analysis</strong> — Analisis tren</li>
+                            <li>Grafik interaktif menggunakan Chart.js</li>
+                            <li>Ekspor laporan ke <strong style="color:var(--gold-light)">PDF & Excel</strong></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-num">07 / 10</div>
+        </div>
+
+        <!-- SLIDE 8: SCREENSHOT -->
+        <div class="slide" id="slide-8">
+            <div class="slide-deco-line"></div>
+            <div class="slide-content">
+                <div class="slide-eyebrow">BAB IV · Implementasi</div>
+                <div class="slide-title">Tampilan Sistem</div>
+                <div class="slide-divider"></div>
+                <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-top:4px;">
+                    <div style="background:rgba(255,255,255,0.04);border:1px dashed rgba(201,168,76,0.3);border-radius:10px;aspect-ratio:16/9;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;">
+                        <span style="font-size:1.5rem;">🖥️</span>
+                        <span style="font-size:0.65rem;color:var(--gray);text-align:center;">Screenshot<br>Halaman Beranda</span>
+                    </div>
+                    <div style="background:rgba(255,255,255,0.04);border:1px dashed rgba(201,168,76,0.3);border-radius:10px;aspect-ratio:16/9;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;">
+                        <span style="font-size:1.5rem;">📊</span>
+                        <span style="font-size:0.65rem;color:var(--gray);text-align:center;">Screenshot<br>Prediksi Stok</span>
+                    </div>
+                    <div style="background:rgba(255,255,255,0.04);border:1px dashed rgba(201,168,76,0.3);border-radius:10px;aspect-ratio:16/9;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;">
+                        <span style="font-size:1.5rem;">⚙️</span>
+                        <span style="font-size:0.65rem;color:var(--gray);text-align:center;">Screenshot<br>Dashboard Admin</span>
+                    </div>
+                </div>
+                <p style="font-size:0.7rem;color:var(--gray);margin-top:14px;text-align:center;">
+                    ↑ Ganti kotak di atas dengan screenshot nyata dari websitemu menggunakan <strong style="color:rgba(255,255,255,0.6)">Insert Image</strong> di PowerPoint / Canva
+                </p>
+            </div>
+            <div class="slide-num">08 / 10</div>
+        </div>
+
+        <!-- SLIDE 9: PENGUJIAN -->
+        <div class="slide" id="slide-9">
+            <div class="slide-deco-line"></div>
+            <div class="slide-content" style="padding: 36px 64px;">
+                <div class="slide-eyebrow">BAB IV · Pengujian</div>
+                <div class="slide-title" style="font-size:1.8rem;">Hasil Pengujian Black Box Testing</div>
+                <div class="slide-divider"></div>
+                <table class="slide-table">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Skenario Pengujian</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>1</td><td>Tampilan halaman publik responsif</td><td><span class="badge-valid">✓ Valid</span></td></tr>
+                        <tr><td>2</td><td>Filter katalog produk real-time</td><td><span class="badge-valid">✓ Valid</span></td></tr>
+                        <tr><td>3</td><td>Kirim pesan via form kontak</td><td><span class="badge-valid">✓ Valid</span></td></tr>
+                        <tr><td>4</td><td>Login & Logout Admin</td><td><span class="badge-valid">✓ Valid</span></td></tr>
+                        <tr><td>5</td><td>CRUD Produk & Galeri</td><td><span class="badge-valid">✓ Valid</span></td></tr>
+                        <tr><td>6</td><td>Kalkulasi Prediksi Stok (3 metode)</td><td><span class="badge-valid">✓ Valid</span></td></tr>
+                        <tr><td>7</td><td>Ekspor Laporan PDF & Excel</td><td><span class="badge-valid">✓ Valid</span></td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="slide-num">09 / 10</div>
+        </div>
+
+        <!-- SLIDE 10: TERIMA KASIH -->
+        <div class="slide slide-thankyou" id="slide-10">
+            <div class="slide-deco-line"></div>
+            <div class="slide-deco-circle" style="width:500px;height:500px;left:-180px;bottom:-220px;"></div>
+            <div class="slide-deco-circle" style="width:250px;height:250px;right:-80px;top:-80px;"></div>
+            <div class="slide-content" style="align-items:center;text-align:center;">
+                <div class="slide-eyebrow" style="justify-content:center;">Terima Kasih</div>
+                <div class="thankyou-title">Terima <span>Kasih</span></div>
+                <div class="thankyou-sub">Semoga karya ini bermanfaat bagi SINAR JAYA KONVEKSI</div>
+                <div class="thankyou-divider"></div>
+                <div class="thankyou-info">
+                    <strong>[Nama Lengkap Kamu]</strong><br>
+                    NIM/NIS: [Nomor Kamu] &nbsp;·&nbsp; [Nama Sekolah/Kampus]<br>
+                    Program Studi: [Nama Jurusan] &nbsp;·&nbsp; 2025
+                </div>
+                <div style="margin-top:24px;font-size:0.72rem;color:rgba(255,255,255,0.3);letter-spacing:0.1em;text-transform:uppercase;">Sesi Tanya Jawab · Q&A</div>
+            </div>
+            <div class="slide-num">10 / 10</div>
+        </div>
+
+    </div><!-- end slide-wrapper -->
+
+    <!-- CONTROLS -->
+    <div class="controls">
+        <button class="ctrl-btn" id="btn-prev" onclick="changeSlide(-1)" disabled>&#8592;</button>
+        <div class="slide-dots" id="slide-dots"></div>
+        <span class="slide-indicator" id="slide-indicator">1 / 10</span>
+        <button class="ctrl-btn" id="btn-next" onclick="changeSlide(1)">&#8594;</button>
+    </div>
+
+    <p style="font-size:0.7rem;color:rgba(255,255,255,0.2);margin-top:12px;text-align:center;">
+        Tekan ← → untuk navigasi · F11 untuk layar penuh · Ctrl+P untuk cetak/export PDF
+    </p>
+
+    <script>
+        let currentSlide = 1;
+        const totalSlides = 10;
+
+        // Build dots
+        const dotsContainer = document.getElementById('slide-dots');
+        for (let i = 1; i <= totalSlides; i++) {
+            const dot = document.createElement('div');
+            dot.className = 'dot' + (i === 1 ? ' active' : '');
+            dot.onclick = () => goToSlide(i);
+            dotsContainer.appendChild(dot);
+        }
+
+        function goToSlide(n) {
+            document.getElementById('slide-' + currentSlide).classList.remove('active');
+            document.querySelectorAll('.dot')[currentSlide - 1].classList.remove('active');
+
+            currentSlide = n;
+
+            document.getElementById('slide-' + currentSlide).classList.add('active');
+            document.querySelectorAll('.dot')[currentSlide - 1].classList.add('active');
+            document.getElementById('slide-indicator').textContent = currentSlide + ' / ' + totalSlides;
+
+            document.getElementById('btn-prev').disabled = currentSlide === 1;
+            document.getElementById('btn-next').disabled = currentSlide === totalSlides;
+        }
+
+        function changeSlide(dir) {
+            const next = currentSlide + dir;
+            if (next < 1 || next > totalSlides) return;
+            goToSlide(next);
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', e => {
+            if (e.key === 'ArrowRight' || e.key === ' ') changeSlide(1);
+            if (e.key === 'ArrowLeft') changeSlide(-1);
+        });
+    </script>
+</body>
+</html>

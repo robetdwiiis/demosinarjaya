@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Administrator - SINAR JAYA KONVEKSI</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --border-color: #334155;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --primary-color: #0ea5e9;
+            --primary-hover: #0284c7;
+            --danger-color: #ef4444;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            font-family: 'Inter', sans-serif;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-primary);
+        }
+
+        .login-container {
+            width: 100%;
+            max-width: 400px;
+            padding: 1.5rem;
+        }
+
+        .login-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 2.5rem 2rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        .brand-logo {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .logo-text {
+            font-size: 1.25rem;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+            color: var(--text-primary);
+        }
+
+        .logo-text span {
+            color: var(--primary-color);
+        }
+
+        .login-subtitle {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            margin-top: 0.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.25rem;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            color: var(--text-secondary);
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            background-color: #0f172a;
+            /* Darker than card */
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            color: white;
+            font-family: inherit;
+            font-size: 0.95rem;
+            transition: border-color 0.2s;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        .toggle-password {
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+
+        .toggle-password:hover {
+            color: var(--text-primary);
+        }
+
+        .btn-login {
+            width: 100%;
+            padding: 0.75rem;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-weight: 500;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            margin-top: 1rem;
+        }
+
+        .btn-login:hover {
+            background-color: var(--primary-hover);
+        }
+
+        .btn-login:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 1.5rem;
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+        }
+
+        .back-link:hover {
+            color: var(--text-primary);
+        }
+
+        #error-message {
+            background-color: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.2);
+            color: var(--danger-color);
+            font-size: 0.875rem;
+            padding: 0.75rem;
+            border-radius: 6px;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            display: none;
+        }
+
+        /* Prevent Chrome Autofill Yellow Background */
+        input:-webkit-autofill,
+        input:-webkit-autofill:hover,
+        input:-webkit-autofill:focus,
+        input:-webkit-autofill:active {
+            -webkit-box-shadow: 0 0 0 30px #0f172a inset !important;
+            -webkit-text-fill-color: white !important;
+            transition: background-color 5000s ease-in-out 0s;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="login-container">
+        <div class="login-card">
+            <div class="brand-logo">
+                <div class="logo-text">SINAR JAYA <span>KONVEKSI</span></div>
+                <div class="login-subtitle">Masuk ke panel admin</div>
+            </div>
+
+            <form id="login-form" autocomplete="off" onsubmit="return handleLoginSubmit(event)">
+                <div id="error-message">Username atau password salah</div>
+
+                <!-- Multiple layers of decoys to confuse browser engines -->
+                <div style="display:none" aria-hidden="true">
+                    <input type="text" name="username_fake">
+                    <input type="password" name="password_fake">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Username</label>
+                    <input type="text" id="u_field" name="u_field" class="form-control" autocomplete="off" required
+                        readonly onfocus="this.removeAttribute('readonly')" placeholder="Masukkan Username">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Password</label>
+                    <div class="input-wrapper">
+                        <input type="password" id="p_field" name="p_field" class="form-control"
+                            autocomplete="new-password" required readonly onfocus="this.removeAttribute('readonly')"
+                            placeholder="Masukkan Password">
+                        <button type="button" class="toggle-password" onclick="togglePassword()">
+                            <i class="fas fa-eye" id="toggle-icon"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-login">Masuk</button>
+            </form>
+
+
+            <a href="../index.html" class="back-link">
+                <i class="fas fa-arrow-left"></i> Kembali ke Website
+            </a>
+        </div>
+    </div>
+
+    <script>
+        function togglePassword() {
+            const input = document.getElementById('p_field');
+            const icon = document.getElementById('toggle-icon');
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.className = 'fas fa-eye-slash';
+            } else {
+                input.type = 'password';
+                icon.className = 'fas fa-eye';
+            }
+        }
+
+        async function handleLoginSubmit(e) {
+            e.preventDefault();
+
+            const btn = document.querySelector('.btn-login');
+            const errorMsg = document.getElementById('error-message');
+            const username = document.getElementById('u_field').value;
+            const password = document.getElementById('p_field').value;
+
+            // Loading state
+            btn.disabled = true;
+            btn.textContent = 'Memproses...';
+            errorMsg.style.display = 'none';
+
+            try {
+                const response = await fetch('../api/auth.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ action: 'login', username, password })
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    // Clear form for security
+                    document.getElementById('u_field').value = '';
+                    document.getElementById('p_field').value = '';
+                    window.location.href = 'index.html';
+                } else {
+                    throw new Error(data.message || 'Login gagal');
+                }
+            } catch (err) {
+                errorMsg.textContent = err.message;
+                errorMsg.style.display = 'block';
+                btn.disabled = false;
+                btn.textContent = 'Masuk';
+            }
+            return false;
+        }
+
+        // Cek login status
+        fetch('../api/auth.php?action=check')
+            .then(res => res.json())
+            .then(data => {
+                if (data.is_logged_in) {
+                    window.location.href = 'index.html';
+                }
+            })
+            .catch(() => { });
+
+        // Extra cleanup to ensure fields start empty
+        window.onload = () => {
+            setTimeout(() => {
+                document.getElementById('u_field').value = '';
+                document.getElementById('p_field').value = '';
+            }, 100);
+        };
+
+    </script>
+</body>
+
+</html>

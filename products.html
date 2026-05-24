@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Katalog Produk SINAR JAYA KONVEKSI - Kemeja, Polo Shirt, Jaket, Seragam berkualitas">
+    <title>Katalog Produk - SINAR JAYA KONVEKSI</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/pages.css">
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <a href="index.html" class="logo">
+                <div class="logo-text">SINAR JAYA<span>KONVEKSI</span></div>
+            </a>
+            <nav class="nav-menu">
+                <a href="index.html">Beranda</a>
+                <a href="about.html">Tentang Kami</a>
+                <a href="products.html" class="active">Produk</a>
+                <a href="gallery.html">Galeri</a>
+                <a href="contact.html">Kontak</a>
+                <a href="admin/index.html" class="nav-admin-btn"><i class="fas fa-fingerprint"></i> <span>Staff
+                        Login</span></a>
+            </nav>
+            <button class="nav-toggle"><span></span><span></span><span></span></button>
+        </div>
+    </header>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <h1>Katalog Produk</h1>
+        <p class="page-subtitle">Temukan produk konveksi berkualitas tinggi untuk kebutuhan Anda</p>
+        <div class="breadcrumb">
+            <a href="index.html">Beranda</a>
+            <span>/</span>
+            <span>Produk</span>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section class="section products">
+        <div class="container">
+            <!-- Search and Filter Toolbar -->
+            <div class="products-toolbar">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="product-search" placeholder="Cari produk...">
+                </div>
+                <div class="products-count">
+                    <span id="product-count-label"></span>
+                </div>
+            </div>
+
+            <!-- Filter Buttons -->
+            <div class="products-filter">
+                <button class="filter-btn active" data-category="all">
+                    <i class="fas fa-th-large"></i><span>Semua</span>
+                </button>
+                <button class="filter-btn" data-category="kemeja">
+                    <i class="fas fa-shirt"></i><span>Kemeja</span>
+                </button>
+                <button class="filter-btn" data-category="polo">
+                    <i class="fas fa-tshirt"></i><span>Polo Shirt</span>
+                </button>
+                <button class="filter-btn" data-category="jaket">
+                    <i class="fas fa-vest"></i><span>Jaket</span>
+                </button>
+                <button class="filter-btn" data-category="seragam">
+                    <i class="fas fa-user-tie"></i><span>Seragam</span>
+                </button>
+                <button class="filter-btn" data-category="kaos">
+                    <i class="fas fa-tshirt"></i><span>Kaos</span>
+                </button>
+                <button class="filter-btn" data-category="celana">
+                    <i class="fas fa-socks"></i><span>Celana</span>
+                </button>
+            </div>
+
+            <!-- Products Grid -->
+            <div class="products-grid" id="products-grid">
+                <!-- Products loaded by JS -->
+            </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Product Detail Modal -->
+    <div class="modal" id="product-modal">
+        <div class="modal-content" style="max-width: 850px;">
+            <div class="modal-header">
+                <h4>Detail Produk</h4>
+                <button class="modal-close" onclick="closeModal('product-modal')"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <!-- Product detail loaded by JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- CTA -->
+    <section class="section cta">
+        <div class="container">
+            <h2>Butuh Produk Custom?</h2>
+            <p>Kami siap melayani pesanan custom sesuai kebutuhan Anda</p>
+            <div class="cta-buttons">
+                <a href="contact.html" class="btn btn-primary btn-lg"><i class="fas fa-envelope"></i> Hubungi Kami</a>
+                <a href="https://wa.me/6285647352998" target="_blank" class="btn btn-outline btn-lg"><i
+                        class="fab fa-whatsapp"></i> WhatsApp</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <div class="logo-text">SINAR JAYA<span>KONVEKSI</span></div>
+                    <p id="footer-company-desc">Mitra terpercaya untuk kebutuhan konveksi berkualitas tinggi sejak 2017.
+                    </p>
+                    <div class="footer-social">
+                        <a href="https://www.facebook.com/share/1BrUVgcHFc/?mibextid=wwXIfr" id="link-facebook"
+                            target="_blank"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://www.instagram.com/sinar_jaya_konveksi_kudus?igsh=MXJucmVoNmF2eWx2cw="
+                            id="link-instagram" target="_blank"><i class="fab fa-instagram"></i></a>
+                        <a href="https://s.shopee.co.id/10xHFKtWol?share_channel_code=1" id="link-shopee"
+                            target="_blank"><i class="fas fa-shopping-bag"></i></a>
+                        <a href="#" id="link-tiktok" style="display: none;" target="_blank"><i
+                                class="fab fa-tiktok"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h5>Menu</h5>
+                    <div class="footer-links">
+                        <a href="index.html">Beranda</a>
+                        <a href="about.html">Tentang Kami</a>
+                        <a href="products.html">Produk</a>
+                        <a href="gallery.html">Galeri</a>
+                        <a href="contact.html">Kontak</a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h5>Produk</h5>
+                    <div class="footer-links">
+                        <a href="products.html?cat=kemeja">Kemeja</a>
+                        <a href="products.html?cat=polo">Polo Shirt</a>
+                        <a href="products.html?cat=jaket">Jaket</a>
+                        <a href="products.html?cat=seragam">Seragam</a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h5>Kontak</h5>
+                    <div class="footer-contact-item"><i class="fas fa-map-marker-alt"></i><span
+                            id="company-address-text">Desa Padurenan, Kec.
+                            Gebog, Kab. Kudus</span></div>
+                    <div class="footer-contact-item"><i class="fab fa-whatsapp"></i><span
+                            class="company-phone-label">+62 856 4735 2998</span></div>
+                    <div class="footer-contact-item"><i class="fas fa-envelope"></i><span
+                            class="company-email-label">info@sinarjaya-konveksi.com</span></div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 SINAR JAYA KONVEKSI. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/data.js?v=8"></script>
+    <script src="js/main.js?v=8"></script>
+    <script src="js/products.js?v=8"></script>
+    <script src="js/settings-sync.js?v=4"></script>
+</body>
+
+</html>

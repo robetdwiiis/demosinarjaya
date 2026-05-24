@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prediksi Stok - SINAR JAYA KONVEKSI</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/style.css?v=3">
+    <link rel="stylesheet" href="../css/admin.css?v=3">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="../js/admin/auth.js"></script>
+    <style>
+        /* CSS BARU YANG PASTI JALAN (KARENA CLASS BARU) - Match Reports Page */
+        .tab-btn {
+            background-color: #ffffff !important;
+            color: #334155 !important;
+            border: 1px solid #cbd5e1 !important;
+            padding: 12px 24px !important;
+            font-weight: 600 !important;
+            font-size: 0.95rem !important;
+            border-radius: 50px !important;
+            cursor: pointer !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            gap: 10px !important;
+            transition: all 0.2s !important;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05) !important;
+        }
+
+        .tab-btn:hover {
+            background-color: #f8fafc !important;
+            border-color: #94a3b8 !important;
+            color: #0f172a !important;
+        }
+
+        /* STATE AKTIF */
+        .tab-btn.active {
+            background: #ffffff !important;
+            background-image: none !important;
+            color: #2563eb !important;
+            border: 2px solid #2563eb !important;
+            box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1) !important;
+        }
+
+        .tab-btn i {
+            font-size: 1.1em !important;
+            color: #64748b !important;
+        }
+
+        .tab-btn.active i {
+            color: #2563eb !important;
+        }
+
+        .tab-container {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="admin-wrapper">
+        <!-- Sidebar -->
+        <aside class="admin-sidebar">
+            <div class="sidebar-header">
+                <div class="logo-text">SINAR JAYA<span>KONVEKSI</span></div>
+                <button class="sidebar-toggle"><i class="fas fa-times"></i></button>
+            </div>
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <span class="nav-section-title">Menu Utama</span>
+                    <a href="index.html" class="nav-item"><i class="fas fa-home"></i><span>Dashboard</span></a>
+                    <a href="products.html" class="nav-item"><i class="fas fa-box"></i><span>Manajemen Produk</span></a>
+                    <a href="gallery.html" class="nav-item"><i class="fas fa-images"></i><span>Galeri Foto</span></a>
+                    <a href="prediction.html" class="nav-item active"><i class="fas fa-chart-line"></i><span>Prediksi
+                            Stok</span></a>
+                    <a href="reports.html" class="nav-item"><i class="fas fa-file-alt"></i><span>Laporan</span></a>
+                    <a href="messages.html" class="nav-item"><i class="fas fa-envelope"></i><span>Pesan Masuk</span></a>
+                    <a href="testimonials.html" class="nav-item"><i class="fas fa-star"></i><span>Testimonial</span></a>
+                </div>
+                <div class="nav-section">
+                    <span class="nav-section-title">Pengaturan</span>
+                    <a href="settings.html" class="nav-item"><i class="fas fa-cog"></i><span>Pengaturan</span></a>
+                    <a href="#" onclick="logout(); return false;" class="nav-item" style="color: var(--danger);"><i
+                            class="fas fa-sign-out-alt"></i><span>Keluar</span></a>
+                </div>
+            </nav>
+            <div class="sidebar-footer">
+                <div class="user-info">
+                    <div class="user-avatar">AD</div>
+                    <div class="user-details"><strong>Admin</strong><span>Administrator</span></div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="admin-main">
+            <header class="admin-header">
+                <div class="header-left">
+                    <button class="mobile-toggle"><i class="fas fa-bars"></i></button>
+                    <div class="page-title">
+                        <h4>Sistem Prediksi Stok Barang</h4>
+                        <span>Prediksi kebutuhan stok tahunan menggunakan berbagai algoritma</span>
+                    </div>
+                </div>
+                <div class="header-right">
+                    <div class="notification-wrapper">
+                        <button class="header-icon notification-trigger" id="notification-btn">
+                            <i class="fas fa-bell"></i>
+                            <span class="badge" id="notification-badge"></span>
+                        </button>
+                        <div class="notification-dropdown" id="notification-dropdown">
+                            <div class="notification-header">
+                                <h6><i class="fas fa-bell"></i> Notifikasi</h6>
+                                <button class="mark-all-read" onclick="markAllRead()">Tandai dibaca</button>
+                            </div>
+                            <div class="notification-list" id="notification-list">
+                                <div class="notification-loading">
+                                    <i class="fas fa-spinner fa-spin"></i> Memuat...
+                                </div>
+                            </div>
+                            <div class="notification-footer">
+                                <a href="messages.html">Lihat Semua Pesan <i class="fas fa-arrow-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="btn btn-secondary" onclick="exportPredictionExcel()"><i
+                            class="fas fa-file-excel"></i> Export Excel</button>
+                    <button class="btn btn-primary" onclick="exportPredictionPDF()"><i class="fas fa-file-pdf"></i>
+                        Export PDF</button>
+                </div>
+            </header>
+
+            <div class="admin-content">
+                <!-- Info Alert -->
+                <div class="prediction-info">
+                    <h5><i class="fas fa-info-circle"></i> Tentang Sistem Prediksi</h5>
+                    <p>Sistem ini menggunakan 3 algoritma untuk memprediksi kebutuhan stok: Moving Average, Linear
+                        Regression, dan Trend Analysis. Pilih algoritma yang sesuai dengan karakteristik data Anda.</p>
+                </div>
+
+                <!-- Prediction Stats -->
+                <div class="prediction-cards">
+                    <div class="prediction-card card">
+                        <h6>Rata-rata Prediksi</h6>
+                        <div class="value" id="avg-prediction">0</div>
+                        <div class="trend" id="growth-rate">+0%</div>
+                    </div>
+                    <div class="prediction-card card">
+                        <h6>Rekomendasi Stok</h6>
+                        <div class="value" id="recommended-stock">0</div>
+                        <div class="trend up">Per Tahun</div>
+                    </div>
+                    <div class="prediction-card card">
+                        <h6>Akurasi Model</h6>
+                        <div class="value">92%</div>
+                        <div class="trend up">Tinggi</div>
+                    </div>
+                </div>
+
+                <!-- Algorithm Selection & Category -->
+                <div class="card" style="margin-bottom: 1.5rem;">
+                    <div class="card-body">
+                        <div
+                            style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+                            <div class="tab-container">
+                                <button class="tab-btn active" data-algorithm="moving-average">
+                                    <i class="fas fa-wave-square"></i> Moving Average
+                                </button>
+                                <button class="tab-btn" data-algorithm="linear-regression">
+                                    <i class="fas fa-chart-line"></i> Linear Regression
+                                </button>
+                                <button class="tab-btn" data-algorithm="trend-analysis">
+                                    <i class="fas fa-chart-area"></i> Trend Analysis
+                                </button>
+                            </div>
+
+                            <div style="display: flex; gap: 1rem; align-items: center;">
+                                <label style="font-weight: 500;">Kategori:</label>
+                                <select id="prediction-category" class="form-input" style="width: auto;">
+                                    <option value="kemeja">Kemeja</option>
+                                    <option value="polo">Polo Shirt</option>
+                                    <option value="jaket">Jaket</option>
+                                    <option value="seragam">Seragam</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Prediction Chart -->
+                <div class="card" style="margin-bottom: 1.5rem;">
+                    <div class="card-header">
+                        <h5><i class="fas fa-chart-line" style="margin-right: 0.5rem; color: var(--primary);"></i>
+                            Grafik Prediksi Stok</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="chart-container" style="height: 400px;">
+                            <canvas id="prediction-chart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recommendations -->
+                <div class="card" style="margin-bottom: 1.5rem;">
+                    <div class="card-header">
+                        <h5><i class="fas fa-lightbulb" style="margin-right: 0.5rem; color: var(--warning);"></i>
+                            Rekomendasi</h5>
+                    </div>
+                    <div class="card-body" id="recommendations">
+                        <!-- Loaded by JS -->
+                    </div>
+                </div>
+
+                <!-- Historical Data -->
+                <div class="card">
+                    <div class="card-header">
+                        <h5><i class="fas fa-history" style="margin-right: 0.5rem; color: var(--primary);"></i> Data
+                            Historis Stok</h5>
+                    </div>
+                    <div class="card-body" id="stock-history-table">
+                        <!-- Loaded by JS -->
+                    </div>
+                </div>
+
+                <!-- Algorithm Explanation -->
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 1.5rem;">
+                    <div class="card" style="padding: 1.5rem;">
+                        <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem;">
+                            <div
+                                style="width: 40px; height: 40px; background: var(--primary-gradient); border-radius: var(--radius); display: flex; align-items: center; justify-content: center; color: white;">
+                                <i class="fas fa-wave-square"></i>
+                            </div>
+                            <h6 style="margin: 0;">Moving Average</h6>
+                        </div>
+                        <p style="color: var(--gray-500); font-size: 0.875rem; margin: 0;">
+                            Menghitung rata-rata dari data historis tahunan untuk memprediksi nilai masa depan. Cocok
+                            untuk trend jangka panjang.
+                        </p>
+                    </div>
+
+                    <div class="card" style="padding: 1.5rem;">
+                        <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem;">
+                            <div
+                                style="width: 40px; height: 40px; background: linear-gradient(135deg, #10b981, #34d399); border-radius: var(--radius); display: flex; align-items: center; justify-content: center; color: white;">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <h6 style="margin: 0;">Linear Regression</h6>
+                        </div>
+                        <p style="color: var(--gray-500); font-size: 0.875rem; margin: 0;">
+                            Menggunakan metode statistik untuk menemukan hubungan linear antara waktu dan penjualan.
+                            Cocok untuk data dengan tren naik/turun konsisten.
+                        </p>
+                    </div>
+
+                    <div class="card" style="padding: 1.5rem;">
+                        <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem;">
+                            <div
+                                style="width: 40px; height: 40px; background: linear-gradient(135deg, #f59e0b, #fbbf24); border-radius: var(--radius); display: flex; align-items: center; justify-content: center; color: white;">
+                                <i class="fas fa-chart-area"></i>
+                            </div>
+                            <h6 style="margin: 0;">Trend Analysis</h6>
+                        </div>
+                        <p style="color: var(--gray-500); font-size: 0.875rem; margin: 0;">
+                            Menggabungkan analisis tren dengan pola musiman untuk prediksi yang lebih akurat. Cocok
+                            untuk data dengan pola berulang (seasonal).
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="../js/data.js?v=7"></script>
+    <script src="../js/main.js?v=7"></script>
+    <script src="../js/admin/prediction.js?v=7"></script>
+    <script src="../js/admin/notifications.js?v=2"></script>
+    <script>
+        // Mobile toggle
+        document.querySelector('.mobile-toggle')?.addEventListener('click', () => {
+            document.querySelector('.admin-sidebar')?.classList.toggle('open');
+        });
+        document.querySelector('.sidebar-toggle')?.addEventListener('click', () => {
+            document.querySelector('.admin-sidebar')?.classList.remove('open');
+        });
+
+
+    </script>
+</body>
+
+</html>

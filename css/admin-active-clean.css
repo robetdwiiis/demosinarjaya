@@ -1,0 +1,33 @@
+/* REVISED Active Tab Style - Clean & Readable (No Full Blue Background) */
+
+.algorithm-tab.active {
+    background: #ffffff !important;
+    color: #0f172a !important;
+    /* Warna teks gelap (Slate-900) agar sangat mudah dibaca */
+    border: 2px solid #0ea5e9 !important;
+    /* Border biru sebagai penanda aktif */
+    box-shadow: 0 4px 12px rgba(14, 165, 233, 0.15) !important;
+    /* Shadow halus */
+    transform: translateY(0);
+    font-weight: 700 !important;
+    /* Teks lebih tebal saat aktif */
+}
+
+/* Hover state untuk tombol yang SEDANG AKTIF */
+.algorithm-tab.active:hover {
+    background: #f0f9ff !important;
+    /* Biru sangat muda saat di-hover */
+    color: #0284c7 !important;
+    border-color: #0284c7 !important;
+    transform: translateY(-1px);
+}
+
+/* Pastikan Icon juga mengikuti tema */
+.algorithm-tab.active i {
+    color: #0ea5e9 !important;
+    /* Icon berwarna biru */
+}
+
+.algorithm-tab.active:hover i {
+    color: #0284c7 !important;
+}
